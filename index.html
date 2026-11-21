@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부산교대 면접 연습 – 30세트 AI 코치 (부산대 연제캠퍼스)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f6fb;
+    color: #1e293b;
+  }
+  .jua { font-family: 'Jua', sans-serif; }
+  .card {
+    background: #ffffff;
+    border: 2px solid #dbeafe;
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 20px -2px rgba(15, 55, 110, 0.05);
+  }
+  .pulse-rec {
+    animation: recPulse 1.5s infinite;
+  }
+  @keyframes recPulse {
+    0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.65); }
+    100% { box-shadow: 0 0 0 18px rgba(225, 29, 72, 0); }
+  }
+  .pulse-urgent {
+    animation: urgentBlink 0.9s infinite alternate;
+  }
+  @keyframes urgentBlink {
+    from { background-color: #fff1f2; border-color: #fda4af; }
+    to { background-color: #ffe4e6; border-color: #f43f5e; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeIn { animation: fadeIn 0.25s ease-out; }
+  /* 커스텀 스크롤바 */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-thumb { background: #bfdbfe; border-radius: 999px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-[#f4f9ff] via-[#edf4fc] to-[#e6f0fb]">
+
+<!-- 상단 헤더 -->
+<header class="bg-white/90 backdrop-blur-md border-b-2 border-sky-100 sticky top-0 z-30 shadow-xs">
+  <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-2">
+    <div class="flex items-center gap-2.5 min-w-0">
+      <!-- 부산 갈매기 + 교대 마스코트 SVG 일러스트 -->
+      <span class="inline-flex items-center justify-center shrink-0 transform hover:scale-110 transition-transform bg-sky-100 p-1.5 rounded-full shadow-xs">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" class="w-6 h-6" aria-hidden="true">
+          <circle cx="18" cy="18" r="16" fill="#e0f2fe"/>
+          <path d="M5 25 Q11 22 18 25 T31 25 L31 32 Q18 35 5 32 Z" fill="#38bdf8" opacity="0.55"/>
+          <ellipse cx="18" cy="20" rx="8.5" ry="7" fill="#ffffff" stroke="#0369a1" stroke-width="1.3"/>
+          <path d="M9.5 18.5 Q5 15 7.5 12.5 Q11 13.5 12.5 16.5" fill="#bae6fd" stroke="#0369a1" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M26.5 18.5 Q31 15 28.5 12.5 Q25 13.5 23.5 16.5" fill="#bae6fd" stroke="#0369a1" stroke-width="1.2" stroke-linecap="round"/>
+          <polygon points="18,6 10,10 18,13 26,10" fill="#1d4ed8"/>
+          <path d="M24 10.8 L24 14.5" stroke="#f59e0b" stroke-width="1.4" stroke-linecap="round"/>
+          <circle cx="24" cy="15" r="1.2" fill="#f59e0b"/>
+          <circle cx="15" cy="18.5" r="1.3" fill="#0f172a"/>
+          <circle cx="21" cy="18.5" r="1.3" fill="#0f172a"/>
+          <polygon points="16.5,20.5 19.5,20.5 18,23.2" fill="#f97316"/>
+          <circle cx="12.8" cy="20.8" r="1.6" fill="#fda4af" opacity="0.7"/>
+          <circle cx="23.2" cy="20.8" r="1.6" fill="#fda4af" opacity="0.7"/>
+        </svg>
+      </span>
+      <h1 class="jua text-lg sm:text-xl text-blue-900 tracking-wide truncate">
+        부산교대 가자! <span class="hidden sm:inline text-xs font-sans font-bold text-sky-600 ml-1">부산대 연제캠퍼스 · 30세트</span>
+      </h1>
+    </div>
+    <div class="flex items-center gap-2 shrink-0">
+      <button id="guideBtn" class="text-xs font-bold text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-xl border border-blue-200 transition-all">
+        📌 실전 안내
+      </button>
+      <div class="hidden sm:block text-xs font-bold text-sky-800 bg-sky-50 px-3 py-1.5 rounded-xl border border-sky-200">
+        ⏱️ 2분 · 꼬리질문 無
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- 메인 콘텐츠 -->
+<main class="max-w-6xl mx-auto px-4 py-5 grid lg:grid-cols-12 gap-5">
+
+  <!-- 좌측 사이드바: 30세트 목록 -->
+  <aside class="lg:col-span-4 card p-4 flex flex-col lg:h-[calc(100vh-105px)] lg:sticky lg:top-20">
+    <!-- 적중 예상도 등급 필터 -->
+    <div class="grid grid-cols-4 gap-1 text-[11px] font-bold mb-2" id="tierFilters">
+      <button data-tier="ALL" class="tf py-1.5 rounded-xl transition-all">전체(30)</button>
+      <button data-tier="S" class="tf py-1.5 rounded-xl transition-all">🔥 S급(10)</button>
+      <button data-tier="A" class="tf py-1.5 rounded-xl transition-all">⭐ A급(12)</button>
+      <button data-tier="B" class="tf py-1.5 rounded-xl transition-all">📘 B급(8)</button>
+    </div>
+
+    <!-- 카테고리 필터 -->
+    <div class="grid grid-cols-5 gap-1 text-[11px] font-bold mb-3" id="filters">
+      <button data-f="-1" class="f py-2 rounded-xl transition-all">전체</button>
+      <button data-f="0" class="f py-2 rounded-xl transition-all">🤖 AI</button>
+      <button data-f="1" class="f py-2 rounded-xl transition-all">🏫 정책</button>
+      <button data-f="2" class="f py-2 rounded-xl transition-all">💚 수업</button>
+      <button data-f="3" class="f py-2 rounded-xl transition-all">🌍 사회</button>
+    </div>
+
+    <!-- 진도율 및 랜덤 선택 -->
+    <div class="flex items-center justify-between text-xs mb-3 px-1 gap-2">
+      <span class="text-slate-600 shrink-0">완료 <b id="done" class="text-blue-700">0</b> / <span id="total">30</span>세트</span>
+      <div class="flex-1 h-2.5 bg-sky-100 rounded-full overflow-hidden">
+        <div id="bar" class="h-full bg-blue-600 w-0 transition-all duration-300"></div>
+      </div>
+      <button id="rand" class="shrink-0 font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl px-2.5 py-1.5 transition-all flex items-center gap-1">
+        <span>🔀</span> 랜덤
+      </button>
+    </div>
+
+    <!-- 세트 목록 컨테이너 -->
+    <div id="list" class="flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[42vh] lg:max-h-none"></div>
+
+    <!-- 나만의 3문항 세트 추가 (접이식) -->
+    <details class="pt-3 mt-3 border-t border-sky-100">
+      <summary class="cursor-pointer text-xs font-bold text-blue-800 hover:text-blue-600 flex items-center justify-between py-1 select-none">
+        <span>✏️ 나만의 3문항(A·B·C) 세트 추가</span>
+        <span class="text-[10px] text-slate-400">열기/닫기</span>
+      </summary>
+      <div class="mt-2 space-y-1.5">
+        <input id="newTitle" type="text" placeholder="세트 주제 (예: 교권과 학급경영)" class="w-full text-xs p-2 rounded-xl border border-sky-200 bg-sky-50/30 focus:outline-blue-400">
+        <textarea id="newQA" rows="2" placeholder="문제 A형 내용 입력" class="w-full text-xs p-2 rounded-xl border border-sky-200 bg-sky-50/30 focus:outline-blue-400"></textarea>
+        <textarea id="newQB" rows="2" placeholder="문제 B형 내용 입력" class="w-full text-xs p-2 rounded-xl border border-sky-200 bg-sky-50/30 focus:outline-blue-400"></textarea>
+        <textarea id="newQC" rows="2" placeholder="문제 C형 내용 입력" class="w-full text-xs p-2 rounded-xl border border-sky-200 bg-sky-50/30 focus:outline-blue-400"></textarea>
+        <button id="addSetBtn" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm">
+          ➕ 3문항 세트 추가하기
+        </button>
+      </div>
+    </details>
+  </aside>
+
+  <!-- 우측 메인 패널: 문제 카드 + 2분 타이머·녹음 + AI 평가 -->
+  <section class="lg:col-span-8 space-y-5">
+
+    <!-- 세트 진행 네비게이션 (A -> B -> C -> 종합 / 꼬리질문 없음) -->
+    <div class="card p-3.5 flex flex-wrap items-center justify-between gap-2 text-xs font-bold">
+      <div id="steps" class="flex items-center gap-1.5 overflow-x-auto py-0.5"></div>
+      <div class="flex items-center gap-1.5">
+        <button id="reset" class="bg-sky-50 border border-sky-200 text-blue-700 rounded-xl px-3 py-2 hover:bg-sky-100 transition-all flex items-center gap-1">
+          <span>🔄</span> 세트 초기화
+        </button>
+      </div>
+    </div>
+
+    <!-- 제시문 문제 카드 -->
+    <div class="card p-5 sm:p-6 relative overflow-hidden">
+      <div class="absolute -top-12 -right-12 w-36 h-36 bg-sky-100/50 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-bold mb-2.5">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span id="tierBadge" class="rounded-xl px-2.5 py-1.5 shadow-xs"></span>
+          <span id="setTag" class="bg-blue-100 text-blue-900 rounded-xl px-3 py-1.5 shadow-xs"></span>
+          <span id="probBadge" class="bg-sky-600 text-white rounded-xl px-3 py-1.5 shadow-xs"></span>
+          <span id="orderBadge" class="bg-slate-100 text-slate-600 rounded-xl px-2.5 py-1.5 text-[11px]"></span>
+        </div>
+        <span id="setNum" class="text-blue-700 font-extrabold"></span>
+      </div>
+
+      <!-- 2026 최신 시사 출제 근거 배너 -->
+      <div id="issueBasis" class="mb-3.5 text-[11px] font-medium text-blue-900 bg-blue-50/70 border border-blue-100 rounded-xl px-3 py-2 flex items-start gap-1.5 leading-relaxed"></div>
+
+      <!-- 문제 본문 -->
+      <h2 id="qtext" class="text-base sm:text-lg font-bold leading-relaxed text-slate-800 whitespace-pre-line"></h2>
+
+      <!-- <참고> 용어 설명 박스 (존재할 때만 표시) -->
+      <div id="qrefBox" class="hidden mt-3.5 bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-xs text-slate-600 leading-relaxed">
+        <span class="font-bold text-slate-800">📖 &lt;참고&gt;</span> <span id="qref"></span>
+      </div>
+
+      <!-- 답변 구조 팁 -->
+      <details id="tipWrap" class="mt-4 bg-sky-50/70 border border-sky-200/80 rounded-2xl p-3.5 text-sm transition-all">
+        <summary class="cursor-pointer font-bold text-blue-900 flex items-center gap-1.5 text-xs sm:text-sm">
+          <span>💡</span> 부산교대 2분 답변 구성 가이드 보기
+        </summary>
+        <p id="tip" class="mt-2 text-xs sm:text-sm text-slate-700 leading-relaxed"></p>
+      </details>
+
+      <!-- 세트 이동 및 문항 빠른 전환 -->
+      <div class="mt-5 flex flex-wrap justify-between items-center gap-2 pt-3 border-t border-sky-100">
+        <button id="prevSet" class="text-xs font-bold border border-sky-200 bg-white text-slate-700 rounded-xl px-3.5 py-2.5 hover:bg-sky-50 transition-all flex items-center gap-1">
+          <span>◀</span> 이전 세트
+        </button>
+        <div class="flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
+          <span>※ 꼬리질문 없음 · 문제 A·B·C 순차 답변</span>
+        </div>
+        <button id="nextSet" class="text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-4 py-2.5 transition-all shadow-sm flex items-center gap-1">
+          다음 세트 <span>▶</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2분 타이머 & 답변 녹음/입력 영역 -->
+    <div class="card p-5 sm:p-6 space-y-4 relative" id="answerBox">
+      <div class="flex flex-wrap justify-between items-center gap-2">
+        <h3 id="rtitle" class="font-bold text-slate-800 flex items-center gap-2 text-sm sm:text-base">
+          <span>🎙️</span> 문제 A형 답변 연습
+        </h3>
+        <button id="soundToggle" class="text-xs font-bold px-3 py-1.5 rounded-xl border border-sky-200 bg-sky-50 text-blue-800 hover:bg-sky-100 transition-all">
+          🔔 종료 알림음 켜짐
+        </button>
+      </div>
+
+      <!-- 2분 실전 카운트다운 타이머 패널 -->
+      <div id="timerPanel" class="rounded-2xl border-2 border-sky-200 bg-sky-50/60 p-4 transition-all">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="text-[11px] font-bold text-sky-800 mb-0.5 flex items-center gap-1.5">
+              <span>⏱️ 2분 답변 타이머</span>
+              <span id="timerStatus" class="px-2 py-0.5 rounded-full bg-white text-sky-700 border border-sky-200 text-[10px]">대기 중</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+              <span id="countdown" class="font-mono text-3xl sm:text-4xl font-extrabold text-blue-900 tracking-tight">02:00</span>
+              <span id="elapsedInfo" class="text-xs font-medium text-slate-500">경과 00:00 / 제한 02:00</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="timerToggleBtn" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-all">
+              ▶ 타이머 시작
+            </button>
+            <button id="timerResetBtn" class="px-3 py-2 rounded-xl bg-white hover:bg-sky-100 text-slate-700 border border-sky-200 text-xs font-bold transition-all">
+              ↺ 2분 리셋
+            </button>
+          </div>
+        </div>
+        <!-- 카운트다운 진행 바 -->
+        <div class="mt-3 w-full h-2.5 bg-white rounded-full overflow-hidden border border-sky-100">
+          <div id="timerBar" class="h-full bg-blue-600 transition-all duration-300" style="width: 100%;"></div>
+        </div>
+        <p id="timerHint" class="mt-2 text-[11px] text-slate-500">
+          💡 마이크 녹음을 누르면 2분 타이머가 자동으로 시작됩니다. 30초 전(주황)·10초 전(빨강)으로 바뀌며 00:00에 알림음이 울립니다.
+        </p>
+      </div>
+
+      <!-- 음성 녹음 컨트롤 -->
+      <div class="bg-gradient-to-r from-[#162944] to-[#0f1d33] rounded-2xl py-5 px-4 flex items-center justify-center gap-5 shadow-inner">
+        <button id="rec" title="녹음 시작/중지" class="w-16 h-16 rounded-full bg-sky-500 hover:bg-sky-400 text-white text-2xl transition-all shadow-xl flex items-center justify-center">
+          🎤
+        </button>
+        <button id="play" disabled title="녹음 재생" class="w-12 h-12 rounded-full bg-slate-700 hover:bg-slate-600 text-white disabled:opacity-30 transition-all flex items-center justify-center text-lg">
+          ▶
+        </button>
+        <audio id="au" class="hidden"></audio>
+      </div>
+
+      <!-- 텍스트 입력 및 STT -->
+      <div>
+        <div class="flex flex-wrap justify-between items-center gap-2 mb-1.5">
+          <label for="tr" class="text-xs font-bold text-slate-700">📝 내 답변 내용 (실시간 음성 인식 · 직접 수정 가능)</label>
+          <button id="stt" class="text-[11px] font-bold bg-sky-50 border border-sky-200 text-blue-700 rounded-xl px-3 py-1.5 hover:bg-sky-100 transition-all shadow-xs flex items-center gap-1">
+            <span>✨</span> AI 음성 받아쓰기
+          </button>
+        </div>
+        <textarea id="tr" rows="5" class="w-full text-sm p-3.5 rounded-2xl border-2 border-sky-100 focus:outline-blue-400 bg-white shadow-inner leading-relaxed" placeholder="마이크 녹음(자동 2분 타이머 시작) 후 AI 받아쓰기를 누르거나, 직접 답변 내용을 입력해 보세요. (블라인드 규정: 성명·고교명 언급 금지)"></textarea>
+        <div class="flex justify-between items-center mt-1 text-[11px] text-slate-400 px-1">
+          <span>2분 적정 분량: 약 400~550자</span>
+          <span id="charCount">0자</span>
+        </div>
+      </div>
+
+      <!-- AI 평가 버튼 -->
+      <div class="flex flex-wrap justify-end gap-2.5 pt-1">
+        <button id="abtn" class="w-full sm:w-auto px-7 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition-all shadow-md flex items-center justify-center gap-1.5 text-sm"></button>
+      </div>
+    </div>
+
+    <!-- AI 피드백 결과 카드 -->
+    <div id="fb" class="hidden card p-5 sm:p-6 space-y-5 animate-fadeIn">
+      <div id="tabs" class="bg-sky-50/90 p-1.5 rounded-2xl flex gap-1.5 border border-sky-100"></div>
+      <div id="fbctx" class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 text-xs space-y-1.5"></div>
+
+      <!-- 점수 2영역 -->
+      <div class="grid grid-cols-2 gap-3 text-center">
+        <div class="bg-blue-50/80 border border-blue-200/70 rounded-2xl p-4">
+          <div class="text-xs font-bold text-blue-900 mb-1">🧠 질문 요구조건 충족·논리성</div>
+          <div class="text-3xl font-black text-blue-950"><span id="s1">0</span><span class="text-xs font-normal text-blue-700"> /100</span></div>
+        </div>
+        <div class="bg-sky-50/80 border border-sky-200/70 rounded-2xl p-4">
+          <div class="text-xs font-bold text-sky-900 mb-1">🎓 고3 교직 적성·발전 가능성</div>
+          <div class="text-3xl font-black text-sky-950"><span id="s2">0</span><span class="text-xs font-normal text-sky-700"> /100</span></div>
+        </div>
+      </div>
+
+      <!-- 질문지 요구조건별 답변 충족 점검표 -->
+      <div id="chkWrap" class="hidden p-4 bg-indigo-50/70 border border-indigo-200/70 rounded-2xl text-sm space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <b id="chkTitle" class="text-xs text-indigo-950 flex items-center gap-1.5"><span>📋</span> 질문지 요구조건별 답변 점검</b>
+          <span class="text-[11px] text-indigo-700 font-semibold bg-white/80 px-2.5 py-0.5 rounded-full border border-indigo-100">교대 교수님 · 고3 기준</span>
+        </div>
+        <div id="chkList" class="space-y-2"></div>
+      </div>
+
+      <div class="p-4 bg-emerald-50/70 border border-emerald-200/70 rounded-2xl text-sm">
+        <b class="text-xs text-emerald-900 flex items-center gap-1.5 mb-1"><span>✅</span> 교수님이 칭찬하는 잘한 점</b>
+        <p id="st" class="whitespace-pre-line text-slate-700 leading-relaxed"></p>
+      </div>
+      <div class="p-4 bg-amber-50/70 border border-amber-200/70 rounded-2xl text-sm">
+        <b class="text-xs text-amber-900 flex items-center gap-1.5 mb-1"><span>⚠️</span> 고3 눈높이 보완 포인트 (빠진 질문·표현·블라인드 점검)</b>
+        <p id="im" class="whitespace-pre-line text-slate-700 leading-relaxed"></p>
+      </div>
+      <div class="p-4 bg-gradient-to-br from-[#162944] to-[#0f1d33] text-slate-100 rounded-2xl text-sm shadow-md">
+        <b id="maTitle" class="text-xs text-sky-300 flex items-center gap-1.5 mb-1.5"><span>⭐</span> 고3 수험생 눈높이 2분 모범 답안</b>
+        <p id="ma" class="whitespace-pre-line leading-relaxed text-sky-50/95"></p>
+      </div>
+
+      <!-- 다음 문항/종합 리포트 빠른 이동 버튼 -->
+      <div id="fbActionWrap" class="flex justify-end pt-1"></div>
+    </div>
+
+  </section>
+</main>
+
+<!-- 부산교대 2027 실전 면접 안내 모달 -->
+<div id="guideModal" class="hidden fixed inset-0 bg-slate-900/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+  <div class="card max-w-lg w-full p-6 space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto animate-fadeIn">
+    <div class="flex items-center justify-between border-b border-sky-100 pb-3">
+      <h3 class="jua text-lg text-blue-900 flex items-center gap-2">📌 2027 부산교대 수시 면접 실전 가이드</h3>
+      <button id="closeGuide" class="text-slate-400 hover:text-slate-700 text-lg font-bold px-2">✕</button>
+    </div>
+    <div class="text-xs sm:text-sm text-slate-700 space-y-3 leading-relaxed">
+      <div class="bg-sky-50 border border-sky-200 rounded-xl p-3.5 space-y-1">
+        <div class="font-bold text-blue-900">1. 면접 방식 및 형식</div>
+        <p>• <b>제시문 기반 블라인드 대면 면접</b> (가번호 응시, 교복·명찰 착용 금지, 성명·고교명 언급 금지)</p>
+        <p>• <b>3인 1조 多대多 면접</b> (면접위원 3인, 결시 시 2인 1조)</p>
+        <p>• <b>총 3문항(문제 A, B, C) 출제</b> — 모든 지원자가 3문항 모두 답변하며, <b>별도 꼬리질문은 없습니다.</b></p>
+      </div>
+      <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-3.5 space-y-1">
+        <div class="font-bold text-blue-900">2. 실제 답변 진행 순서 (가번호 순)</div>
+        <p>• <b>문제 A</b>: 1번 수험생이 소리내어 낭독 후 답변 → 2번 → 3번</p>
+        <p>• <b>문제 B</b>: 2번 수험생이 소리내어 낭독 후 답변 → 3번 → 1번</p>
+        <p>• <b>문제 C</b>: 3번 수험생이 소리내어 낭독 후 답변 → 1번 → 2번</p>
+        <p class="text-[11px] text-slate-500 mt-1">※ 책상 위 문제지 중 현재 진행 중인 문제만 확인하며 답변합니다.</p>
+      </div>
+      <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-3.5 space-y-1">
+        <div class="font-bold text-amber-900">3. 고득점 2분 답변 전략</div>
+        <p>• <b>요구 조건 빠짐없이 챙기기</b>: "지지 주장 + 이유 + 문제점 + 해결방안" 또는 "장단점 각각 + 본인 경험 근거" 등 문항의 모든 조건을 구조화해 말하세요.</p>
+        <p>• <b>2분 시간 엄수</b>: 서론(입장) 15초 → 본론(근거·사례) 65초 → 보완/해결방안 30초 → 마무리 10초로 연습하면 안정적입니다.</p>
+        <p>• <b>전자기기 주의</b>: 스마트워치, AI 안경 등 모든 전자기기 반입 금지 (아날로그 시계만 허용).</p>
+      </div>
+    </div>
+    <button id="closeGuideBtn" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all">
+      확인하고 연습 시작하기
+    </button>
+  </div>
+</div>
+
+<!-- 로딩 오버레이 -->
+<div id="load" class="hidden fixed inset-0 bg-slate-900/40 z-50 flex items-center justify-center backdrop-blur-sm p-4">
+  <div class="card p-7 text-center space-y-3.5 shadow-2xl max-w-xs w-full">
+    <div class="w-10 h-10 mx-auto border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+    <p class="text-sm font-bold text-slate-700">부산교대 면접위원 교수님이<br>답변을 꼼꼼히 평가하고 있어요… ☕</p>
+  </div>
+</div>
+
+<!-- 토스트 알림 -->
+<div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-2xl z-50 opacity-0 transition-opacity pointer-events-none shadow-2xl max-w-xs"></div>
+
+<script>
+/* =========================================================================
+   부산교대(부산대학교 연제캠퍼스) 2027 수시 대비 3문항 × 30세트 (총 90문항)
+   - 2026년 11월 기준 대한민국 최신 초등교육 이슈 3차 정밀 검증 반영
+   - 2026학년도 기출 중복 탈피 및 후속·확장 쟁점 반영
+   - 적중 예상도 등급: S급(최우선 10세트) / A급(핵심 12세트) / B급(기본 8세트)
+   - 카테고리 t: 0=AI·디지털, 1=정책·교권, 2=학생·수업, 3=사회·생태·미래
+   ========================================================================= */
+const SETS = [
+  /* ==================== S급 (최우선 적중 예상 10세트) ==================== */
+  {
+    id:'s01', tier:'S', t:0, cat:'AI·디지털', title:'AI 교육자료 전환과 수행평가 AI 관리',
+    basis:'2026년 AI 디지털교과서→‘AI 교육자료’ 자율 선택 전환, AI 중점학교 확대, 2026 교육부 ‘수행평가 AI 활용 관리 방안’ 시행 직결',
+    items:[
+      {
+        label:'문제 A형',
+        q:'AI 디지털교과서의 법적 지위가 의무 채택 ‘교과용 도서’에서 학교별 자율 선택 ‘AI 교육자료’로 변경되어 운영되고 있다. 이에 대해 지역·학교 간 교육 격차를 막기 위해 모든 학교에 의무 도입해야 한다는 주장과, 현장 준비도와 디지털 부작용을 고려해 학교별 자율 선택을 유지해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 그 이유를 말하고, 이 주장이 지닌 문제점을 지적한 후 해결 방안을 제시하시오.',
+        tip:'[지지 입장 선언] → [이유 2가지] → [선택 입장의 한계점 솔직히 지적] → [구체적 해결 방안(교사 연수·공공 플랫폼 및 희망 학교 지원 등)] 순서로 2분 구성.'
+      },
+      {
+        label:'문제 B형',
+        q:'김 교사는 “디지털 시대를 살아갈 초등학생들에게는 저학년부터 태블릿과 AI 교육자료를 활용한 디지털 리터러시 교육이 우선되어야 한다”고 주장하지만, 박 교사는 “초등 시기는 종이책과 연필을 활용한 기초 문해력과 손글씨·집중력 습관을 다지는 것이 더 중요하다”고 주장한다. 두 견해 중 한 가지를 선택하고, 선택한 이유를 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[김/박 교사 중 1인 명확히 선택] → [초등 발달 특성 근거] → [본인의 실제 학창 시절 경험(블라인드 규정: 학교명·실명 언급 금지)] → [교사로서의 실천 다짐].'
+      },
+      {
+        label:'문제 C형',
+        q:'교육부는 2026년부터 수행평가에서 생성형 AI 활용을 일률적으로 금지하기보다 ‘활용 범위 설정·사용 과정(프롬프트·출처) 표기·수업 내 관찰 평가’를 원칙으로 관리하는 방안을 시행하고 있다. 초등 국어 글쓰기 수행평가에서 아이디어 탐색과 초고 점검 단계에 한해 AI 활용을 허용할 때 기대할 수 있는 긍정적인 효과와 발생할 수 있는 문제점을 말하고, 문제점을 보완하기 위한 방안을 제시하시오.',
+        tip:'[긍정적 효과(자기수정·표현 확장)] → [문제점(AI 문장 무비판적 베끼기·가정별 활용 격차·개인정보 입력 위험)] → [보완 방안(AI 사용 기록지·수업 중 직접 작성 및 구두 확인)].'
+      }
+    ]
+  },
+  {
+    id:'s02', tier:'S', t:1, cat:'정책·교권', title:'만 14세 미만 SNS 제한과 브레인 로트',
+    basis:'2026년 11월 8일 정부 ‘만 14세 미만 SNS 가입 제한·추천 알고리즘·무한 스크롤 규제’ 추진 + 2026년 3월 수업 중 스마트폰 금지법 후속',
+    items:[
+      {
+        label:'문제 A형',
+        q:'아동·청소년의 SNS 과의존과 정신건강 피해가 심각해지자, 최근 정부는 만 14세 미만 아동·청소년의 SNS 가입을 법적으로 제한하고 추천 알고리즘과 무한 스크롤 같은 중독성 기능을 규제하는 방안을 추진하고 있다. 이에 대해 아동 보호를 위해 법적 가입 금지와 기능 규제를 도입해야 한다는 주장과, 법적 금지보다 가정·학교의 자율 조절과 미디어 리터러시 교육으로 해결해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 그 이유를 말하고, 이 주장이 지닌 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [선택 입장의 한계(법적 금지 시 우회 가입·표현의 자유 논란 / 교육만으론 중독 알고리즘 대응 한계)] → [현실적 해결 방안(플랫폼 규제+디지털 교육 병행)].'
+      },
+      {
+        label:'문제 B형',
+        q:'2026년 3월부터 수업 중 스마트기기 사용을 제한하는 법이 시행되면서 학급 규칙을 정하는 회의가 열렸다. 김 교사는 “등교 직후 학생들의 스마트폰을 일괄 수거해 하교 시 돌려주어야 수업 집중력과 또래 대화가 살아난다”고 주장하지만, 최 교사는 “학생이 직접 전원을 끄고 가방에 보관하도록 맡겨야 스스로 절제하는 습관을 기를 수 있다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [최 교사 장·단점] → [자신의 의견(학년별 단계적 적용 등 절충 또는 명확한 선택과 근거)].'
+      },
+      {
+        label:'문제 C형',
+        q:'짧고 자극적인 숏폼 영상과 저품질 온라인 콘텐츠를 반복 소비하면서 사고력과 주의 집중력이 저하되는 ‘브레인 로트(brain rot)’ 현상이 초등학생 사이에서도 확산되고 있다. 초등교사로서 교실 수업과 학급 경영을 통해 브레인 로트를 예방하고 학생들의 깊은 사고력을 회복할 수 있는 활동 방안을 제시하시오.',
+        ref:'‘브레인 로트(brain rot)’란 사소하고 자극적인 온라인 콘텐츠를 과도하게 소비해 정신적·지적 기능이 퇴화하는 듯한 상태를 뜻하며, 옥스퍼드 사전 올해의 단어로 선정된 바 있다.',
+        tip:'[현상 진단] → [교실 활동 방안 2~3가지(아침 15분 종이책 읽기·디지털 디톡스 챌린지·긴 호흡의 탐구 프로젝트·미디어 사용 성찰 일기)] → [가정 연계 방안].'
+      }
+    ]
+  },
+  {
+    id:'s03', tier:'S', t:1, cat:'정책·교권', title:'학생맞춤통합지원법(학맞통)과 교육·복지 경계',
+    basis:'2026년 3월 ‘학생맞춤통합지원법’ 전국 전면 시행 — 기초학력·경제적 빈곤·정서위기 통합 지원 속 교사 업무 전가·책임 경계 논란 최상',
+    items:[
+      {
+        label:'문제 A형',
+        q:'2026년 3월부터 기초학력 부진, 경제적 어려움, 심리·정서 위기 등 복합적 어려움을 겪는 학생을 조기에 발굴해 통합 지원하는 ‘학생맞춤통합지원법’이 전면 시행되었다. 이에 대해 학교가 중심이 되어 위기 학생을 적극 발굴하고 맞춤형 지원을 총괄해야 한다는 주장과, 복지·상담 영역까지 학교와 교사에게 과도한 책임과 행정 업무가 전가되므로 지자체·전문기관 중심으로 역할을 분리해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [선택 입장의 문제점(학교 중심 시 교사 수업권 침해·소진 / 분리 시 사각지대·연계 지연)] → [해결 방안(전담 인력 배치·지자체 원스톱 연계망)].'
+      },
+      {
+        label:'문제 B형',
+        q:'김 교사는 “복합적인 어려움을 겪는 위기 학생을 돕기 위해서는 담임교사가 가정환경과 정서 상태를 세심히 파악해 적극적으로 개입해야 한다”고 주장하지만, 박 교사는 “과도한 개입은 학생에게 ‘문제아’라는 낙인을 찍거나 가정의 사생활을 침해할 수 있으므로, 수업 중 학습 지원에 집중하고 필요시 전문기관에 연계하는 선을 지켜야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [초등교사의 돌봄·교육적 역할 관점 이유] → [본인의 학교생활·동아리·봉사 등 구체적 경험 근거] → [균형 잡힌 실천 다짐].'
+      },
+      {
+        label:'문제 C형',
+        q:'학생맞춤통합지원 체계에서는 담임교사, 전문상담교사, 교육복지사, 보건교사 등이 팀을 이루어 한 학생을 지원한다. 이러한 다직종 협력 지원이 학교 현장에서 실효성을 거두기 위해 기대할 수 있는 긍정적인 효과와 발생할 수 있는 문제점을 말하고, 초등교사로서 문제점을 보완할 수 있는 방안을 제시하시오.',
+        tip:'[긍정적 효과(다각적 원인 파악·맞춤형 조기 개입)] → [문제점(개인정보 유출 및 낙인 우려·부서 간 책임 떠넘기기·소통 부족)] → [보완 방안(비밀유지 원칙·정기 협의체·명확한 역할 분담)].'
+      }
+    ]
+  },
+  {
+    id:'s04', tier:'S', t:1, cat:'정책·교권', title:'초등 3시 하교제 논란과 온동네 돌봄',
+    basis:'2026년 11월 10일 국가교육위 ‘초등 3시 하교’ 사실상 철회 논란 + 2026년 ‘온동네 초등돌봄·교육’(초3 방과후 이용권 연 50만 원, 부산 시범 도입) 직결',
+    items:[
+      {
+        label:'문제 A형',
+        q:'최근 사교육비 경감과 돌봄 공백 해소를 위해 초등 저학년의 정규 수업이나 방과후 시간을 늘려 오후 3시경 하교하도록 하는 ‘초등 3시 하교제’ 도입 논의가 뜨거운 쟁점이 되었다. 이에 대해 맞벌이 가정의 돌봄 부담과 교육 격차를 줄이기 위해 도입해야 한다는 주장과, 초등 저학년의 발달 단계에 맞지 않고 기존 돌봄 정책과 중복되며 교원 부담을 가중한다는 반대 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장이 지닌 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [선택 입장의 문제점(찬성 시 아동 피로·교사 부담 / 반대 시 사교육 ‘학원 뺑뺑이’·돌봄 공백)] → [해결 방안(온동네 돌봄 질 제고·지자체 연계)].'
+      },
+      {
+        label:'문제 B형',
+        q:'김 교사는 “방과후 온동네 초등돌봄 시간은 정규 수업을 마친 아이들이 마음껏 쉬고 놀이하며 정서적 안정을 얻는 시간이 되어야 한다”고 주장하지만, 최 교사는 “학부모의 사교육비 부담을 줄이기 위해 영어·코딩·예체능 등 수준 높은 교육 프로그램을 확대해야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 선택한 이유를 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [초등학생의 발달·휴식권 또는 공교육 격차 해소 관점 이유] → [본인의 방과후·돌봄·놀이 경험과 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'2026년부터 초등돌봄이 ‘온동네 초등돌봄·교육’으로 개편되어 학교와 지자체·지역 돌봄기관이 협력하고, 초등 3학년 희망 학생에게는 연 50만 원의 방과후 프로그램 이용권이 제공되고 있다. 이처럼 초등돌봄과 방과후 교육을 지역사회 기관과 연계해 운영할 때 기대할 수 있는 긍정적인 효과와 우려되는 문제점을 말하고, 문제점을 보완하기 위한 방안을 제시하시오.',
+        tip:'[긍정적 효과(프로그램 선택권 확대·지역 자원 활용·방학 돌봄 공백 해소)] → [문제점(기관 이동 중 안전사고 우려·지역 간 인프라 및 프로그램 질 격차)] → [보완 방안(귀가 동행 안전망·소외지역 공공 프로그램 공급)].'
+      }
+    ]
+  },
+  {
+    id:'s05', tier:'S', t:1, cat:'정책·교권', title:'서이초 3주기와 아동복지법 ‘정서적 학대’ 개정',
+    basis:'2026년 7월 서이초 3주기 교원단체·국회 ‘아동복지법 정서적 학대’ 조항 개정 요구, 악성 민원 대응 및 교육활동 보호 법제화 쟁점',
+    items:[
+      {
+        label:'문제 A형',
+        q:'교권 보호 5법 개정 이후에도 모호한 아동복지법상 ‘정서적 학대’ 조항 때문에 교사의 정당한 생활지도가 무분별한 아동학대 신고로 이어진다는 지적이 계속되고 있다. 이에 대해 교사의 교육활동을 보호하기 위해 정서적 학대 기준을 구체화하고 정당한 지도에 대한 면책을 확대해야 한다는 주장과, 면책 범위를 넓히면 실제 아동 인권 침해가 은폐될 수 있어 신중해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [선택 입장의 문제점(면책 확대 시 아동 보호 약화 우려 / 현행 유지 시 방어적 생활지도·교권 위축)] → [해결 방안(구체적 생활지도 가이드라인·교육청 전담 조사기구)].'
+      },
+      {
+        label:'문제 B형',
+        q:'김 교사는 “학부모와의 신뢰를 쌓기 위해 교사가 학급 SNS나 개인 연락망을 통해 수시로 소통하며 아이의 학교생활을 공유해야 한다”고 주장하지만, 박 교사는 “교사의 사생활과 교육활동 보호를 위해 학교 대표번호나 공식 민원 대응 시스템을 통해서만 정해진 시간에 소통해야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(공식 소통 채널 원칙 + 정기 상담·알림장 활용을 통한 따뜻한 신뢰 구축)].'
+      },
+      {
+        label:'문제 C형',
+        q:'수업 방해나 폭력적 행동으로 다른 학생의 학습권을 심각하게 침해하는 학생을 일시적으로 교실 밖으로 분리 지도하는 제도가 운영되고 있다. 이러한 ‘수업 방해 학생 분리 지도’를 초등학교 현장에 적용할 때 기대할 수 있는 긍정적인 효과와 발생할 수 있는 문제점을 말하고, 문제점을 보완하기 위한 방안을 제시하시오.',
+        tip:'[긍정적 효과(다수 학생 학습권 보호·위기 학생 감정 진정)] → [문제점(분리 공간 및 전담 인력 부족·학생 낙인감 및 교육 소외)] → [보완 방안(전문 상담 연계·회복적 성찰 활동·전담 지원 인력 배치)].'
+      }
+    ]
+  },
+  {
+    id:'s06', tier:'S', t:1, cat:'정책·교권', title:'하늘이법 시행 — 교내 CCTV 확대와 교원 마음건강',
+    basis:'2026년 2월 ‘하늘이법’(초중등교육법·교육공무원법 개정안) 통과 후 학교 사각지대 CCTV 의무화·교실 확대 찬반 및 교원 정신건강·복직 심사 쟁점',
+    items:[
+      {
+        label:'문제 A형',
+        q:'학교 내 안전사고를 예방하기 위해 복도·계단 등 교내 사각지대에 CCTV 설치를 의무화하는 법안이 통과된 데 이어, 일부에서는 초등학교 교실 내부까지 CCTV를 설치해야 한다는 주장이 제기되고 있다. 이에 대해 아동 안전 확보와 사건의 객관적 확인을 위해 교실 CCTV 설치를 확대해야 한다는 주장과, 학생과 교사의 인권·사생활을 침해하고 교육적 신뢰를 훼손하므로 반대한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [선택 입장의 한계(설치 시 감시 문화·소극적 수업 / 반대 시 사각지대 안전 불안)] → [해결 방안(출입 통제·안전 인력 확충·신뢰 기반 소통)].'
+      },
+      {
+        label:'문제 B형',
+        q:'교원의 정신건강 관리를 강화하기 위한 제도 논의에서 김 교사는 “학생 안전을 최우선으로 삼아 정기적인 교원 심리검사와 엄격한 휴·복직 심사를 의무화해야 한다”고 주장하지만, 최 교사는 “의무 검사나 강제적 심사는 정신건강에 대한 낙인을 키워 교사들이 오히려 치료를 숨기게 만드므로, 비밀이 보장되는 자율적 상담과 치료 휴직 지원이 우선되어야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [최 교사 장·단점] → [자신의 의견(학생 안전을 위한 객관적·전문적 기준과 교원 치료권·비밀 보장의 조화)].'
+      },
+      {
+        label:'문제 C형',
+        q:'초등학생의 방과후 귀가 안전에 대한 학부모의 불안이 커지면서 ‘대면 인계·동행 귀가 원칙’과 스마트 안심알리미 활용이 강조되고 있다. 초등학교에서 학생 하교 및 돌봄 귀가 안전망을 강화할 때 발생할 수 있는 현장의 어려움(문제점)을 말하고, 학교·가정·지역사회가 협력해 해결할 수 있는 방안을 제시하시오.',
+        tip:'[현장 어려움(교사·돌봄전담사 인계 업무 과중·맞벌이 학부모 대면 인계 곤란)] → [협력 해결 방안(지자체 귀가 안전지킴이·시니어 인력 연계·안전 귀가 앱 고도화)].'
+      }
+    ]
+  },
+  {
+    id:'s07', tier:'S', t:1, cat:'정책·교권', title:'4·7세 고시 금지법 시행과 초등 조기 사교육',
+    basis:'2026년 10월 1일 ‘4·7세 고시’(유아 학원 입학·분반 시험) 금지법 정식 시행 및 10~11월 학원가 ‘꼼수 레벨테스트’ 편법 논란 직결',
+    items:[
+      {
+        label:'문제 A형',
+        q:'2026년 10월부터 유아 대상 학원의 입학·분반 시험인 이른바 ‘4세·7세 고시’가 법적으로 금지되었으나, 일부 학원에서 상담이나 관찰 진단으로 위장한 편법 평가가 이어지고 있다는 지적이 나온다. 이에 대해 과도한 조기 사교육과 초등 선행학습을 막기 위해 법적 규제와 단속을 더욱 강화해야 한다는 주장과, 규제만으로는 편법과 음성화만 키우므로 공교육 신뢰 회복과 입시 제도 개편으로 접근해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [한계점(법적 규제 강화 시 음성화·개인과외 풍선효과 / 공교육 강화만으론 즉각적 과열 억제 한계)] → [규제 실효성 확보+유·초 공교육 강화 병행안].'
+      },
+      {
+        label:'문제 B형',
+        q:'‘초등 의대반’ 등 선행학습이 확산된 학급을 맡은 교사들이 고민을 나누고 있다. 김 교사는 “이미 선행학습을 마친 학생들의 학습 의욕이 떨어지지 않도록 수준별 심화 과제를 별도로 제공해야 한다”고 주장하지만, 박 교사는 “공교육은 교육과정에 충실해야 하며, 선행 학생과 미선행 학생이 함께 탐구하고 협력하는 개방형 수업을 통해 깊이 있는 사고력을 길러야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [초등 공교육의 본질과 학습 격차 해소 근거] → [본인의 학교 수업·모둠 활동·또래 멘토링 경험 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'어린 시기부터 과도한 선행학습과 경쟁에 노출된 초등학생들은 학습 무기력이나 높은 학업 스트레스를 겪는 경우가 많다. 초등교사로서 교실 수업과 학부모 상담을 통해 아이들이 ‘정답 맞히기 경쟁’에서 벗어나 배움의 즐거움을 회복하도록 도울 수 있는 방안을 제시하시오.',
+        tip:'[수업 방안(실패를 허용하는 교실·과정 중심 피드백·실생활 연계 탐구)] → [학부모 소통 방안(초등 시기 정서·놀이·기초습관의 중요성 공유)].'
+      }
+    ]
+  },
+  {
+    id:'s08', tier:'S', t:3, cat:'사회·생태·미래', title:'학령인구 감소 — 교원 정원 산정 기준 논쟁',
+    basis:'2026년 8월 교육부 ‘학생 수 95% 기준’ 교원 정원 배정 기준 공표 및 교육기본통계(초등 평균 18.6명 속 도심 과밀·농촌 과소 양극화) 쟁점',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초저출생으로 초등학생 수가 급감하는 가운데, 최근 공표된 교원 정원 배정 기준이 여전히 ‘학생 수(95%)’ 중심인 점을 두고 논쟁이 치열하다. 재정 효율성을 위해 학생 수 감소에 비례해 교원 정원을 감축해야 한다는 주장과, 도심 과밀학급 해소와 기초학력·다문화·특수·정서 위기 학생 맞춤형 지도를 위해 ‘학급 수 기준’으로 산정 방식을 바꾸어 적정 교원을 확보해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장을 선택했을 때 해결해야 할 과제를 제시하시오.',
+        tip:'[지지 입장 및 이유] → [해결 과제(학급 수 기준 전환 시 예산 확보·도심 과밀과 농촌 과소 불균형 조정 / 감축 시 개별 맞춤 지도 약화)] → [구체적 해결책].'
+      },
+      {
+        label:'문제 B형',
+        q:'소규모 학급(10명 내외)과 적정 규모 학급(20~25명)의 교육 효과를 두고 의견이 나뉘고 있다. 김 교사는 “소규모 학급은 교사가 한 명 한 명에게 세밀한 개별화 지도를 할 수 있어 초등 교육에 훨씬 유리하다”고 주장하지만, 최 교사는 “초등학교는 다양한 친구들과 부딪히며 사회성과 협업 능력을 기르는 곳인 만큼 일정 규모 이상의 또래 집단이 더 중요하다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [개별화 교육 vs 사회성 발달 관점 이유] → [본인의 학창 시절 학급 규모·또래 협업 경험 구체적 제시].'
+      },
+      {
+        label:'문제 C형',
+        q:'학생 수가 줄어들어 한 학년이 1개 반뿐이거나 복식학급으로 운영되는 소규모 초등학교가 늘고 있다. 이러한 소규모 학교의 학생들이 다양한 또래 관계와 풍부한 교과·예체능 경험을 누릴 수 있도록 지원할 수 있는 교육적 운영 방안을 제시하시오.',
+        ref:'‘복식학급’이란 학생 수가 적은 학교에서 서로 다른 두 개 이상의 학년을 하나의 학급으로 편성하여 함께 수업하는 학급 형태를 의미한다.',
+        tip:'[공동교육과정(인근 학교 연합 체육·체험·동아리)] → [원격·화상 교류 수업] → [지역 특색 생태·문화 체험 프로젝트] → [교사의 복식학급 맞춤형 수업 설계].'
+      }
+    ]
+  },
+  {
+    id:'s09', tier:'S', t:2, cat:'학생·수업', title:'사회정서교육(SEL) 확대와 초등학생 마음건강',
+    basis:'2026년 교육부 ‘한국형 사회정서교육’ 전국 초·중·고 안착, ‘마음 EASY’ 선별검사 확대 및 초등학생 우울·불안·자해 저연령화 대응',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초등학생의 우울·불안 등 정서적 위기가 저연령화되면서 모든 학교에서 사회정서교육과 정기적인 마음건강 선별검사를 확대하자는 움직임이 커지고 있다. 이에 대해 위기 학생을 조기에 발견하기 위해 학교 차원의 정기 심리검사와 사회정서교육을 의무화해야 한다는 주장과, 낙인효과와 교사의 전문성 한계로 인해 희망 학생 중심의 자율적 상담 지원에 집중해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(의무화 시 형식적 검사·개인정보 및 낙인 우려 / 자율 시 숨겨진 위기 아동 놓침)] → [해결 방안(비밀보장·전문상담교사 확충·일상 속 자연스러운 정서 교육)].'
+      },
+      {
+        label:'문제 B형',
+        q:'초등학생의 사회정서 역량을 기르는 방법을 두고 김 교사는 “국어·도덕 등 교과 시간이나 창의적 체험활동에 별도의 ‘사회정서교육’ 시수를 확보해 체계적으로 가르쳐야 한다”고 주장하지만, 박 교사는 “별도 수업보다는 아침 맞이, 쉬는 시간 대화, 학급 회의 등 학교 일상 전반에서 교사가 따뜻한 관계를 맺으며 자연스럽게 체득하게 해야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [체계적 교육 vs 일상적 관계 경험의 교육적 효과] → [본인이 학창 시절 정서적 위로·공감을 경험했던 구체적 사례].'
+      },
+      {
+        label:'문제 C형',
+        q:'자신의 감정을 말로 표현하는 데 서툴러 친구에게 짜증을 내거나 위축되는 초등학생이 많다. 초등교사로서 학생들이 자신의 감정을 건강하게 인식·조절하고 타인의 감정에 공감하도록 돕는 ‘사회정서학습(SEL)’ 기반 학급 활동 방안을 제시하시오.',
+        ref:'‘사회정서학습(SEL: Social and Emotional Learning)’이란 자기 인식, 자기 관리, 사회적 인식, 관계 기술, 책임 있는 의사결정의 5가지 핵심 역량을 기르는 교육을 말한다.',
+        tip:'[감정 온도계·아침 감정 체크인] → [감정 단어 카드·‘나-전달법’ 대화 연습] → [그림책·역할극을 통한 타인 관점 취하기] → [학급 칭찬·감사 나누기].'
+      }
+    ]
+  },
+  {
+    id:'s10', tier:'S', t:3, cat:'사회·생태·미래', title:'이주배경(다문화) 학생 증가와 상호문화 교육',
+    basis:'2026년 전체 초·중·고 학생 중 이주배경 학생 20만 명 돌파(비율 4% 육박), 중도입국·외국인 가정 학생 한국어 교육 및 역차별 논란',
+    items:[
+      {
+        label:'문제 A형',
+        q:'한국어가 서툰 중도입국 및 외국인 가정 초등학생이 빠르게 늘어나고 있다. 이에 대해 이주배경 학생을 일정 기간 별도의 ‘한국어 학급(특별학급)’에 배치해 집중적으로 한국어를 익힌 뒤 원적학급에 통합해야 한다는 주장과, 처음부터 일반 학급에 배치해 또래와 어울리며 자연스럽게 언어와 학교생활을 익히도록 해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(별도 배치 시 분리감·또래 고립 / 즉시 통합 시 수업 이해 불가·학습 소외 및 교사 부담)] → [해결 방안(부분 통합 모델·이중언어 강사 지원)].'
+      },
+      {
+        label:'문제 B형',
+        q:'다문화 학생이 함께 공부하는 학급에서 김 교사는 “다문화 학생의 문화적 배경을 존중해 각 나라의 언어와 문화를 소개하는 다문화 체험 행사를 적극 열어야 한다”고 주장하지만, 최 교사는 “특정 학생의 출신 배경을 지나치게 부각하면 오히려 ‘다르다’는 구별과 편견을 키울 수 있으므로 모든 학생을 똑같이 대하는 보편적 학급 운영에 집중해야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [최 교사 장·단점] → [자신의 의견(특정 학생을 구경거리로 만들지 않는 상호문화적 관점과 자연스러운 다양성 존중)].'
+      },
+      {
+        label:'문제 C형',
+        q:'최근 이주배경 학생에 대한 맞춤형 지원이 확대되면서 일부에서는 일반 가정 학생에 대한 ‘역차별’이나 학업 수준 저하를 우려하는 목소리도 나오고 있다. 초등교사로서 모든 학생과 학부모가 서로의 다양성을 존중하며 함께 성장하는 ‘상호문화 교실’을 만들기 위한 지도 방안을 제시하시오.',
+        tip:'[보편적 학습 지원으로 역차별 오해 해소] → [이중언어·문화적 강점을 학급 자산으로 활용하는 협력 프로젝트] → [가정통신문 다국어 번역 및 학부모 간 소통의 장 마련].'
+      }
+    ]
+  },
+
+  /* ==================== A급 (핵심 예상 12세트) ==================== */
+  {
+    id:'s11', tier:'A', t:0, cat:'AI·디지털', title:'딥페이크·디지털 범죄 예방과 초등 디지털 시민성',
+    basis:'초등 고학년까지 확산된 딥페이크 합성·사이버 폭력 문제 및 디지털 시민성·저작권·초상권 교육 의무화 추세',
+    items:[
+      {
+        label:'문제 A형',
+        q:'생성형 AI를 악용한 딥페이크 합성물 제작과 사이버 폭력 피해가 초등학생에게까지 번지고 있다. 이에 대해 학교 차원에서 가해 학생에 대한 엄정한 징계와 법적 책임을 강화해야 한다는 주장과, 초등학생의 발달 특성을 고려해 처벌 강화보다 디지털 윤리·공감 교육과 피해 회복 중심의 예방 교육에 집중해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(엄벌만 강조 시 낙인·재범 예방 한계 / 교육만 강조 시 경각심 부족·피해자 2차 피해)] → [해결 방안(단호한 기준 안내+실천적 디지털 시민교육)].'
+      },
+      {
+        label:'문제 B형',
+        q:'초등학생의 초상권과 디지털 안전을 지키기 위해 김 교사는 “학급 홈페이지나 알림장 앱에 학생들의 활동 사진을 올리는 것을 전면 중단해야 한다”고 주장하지만, 박 교사는 “학부모와의 소통과 아이들의 성장 기록 공유를 위해 보안이 강화된 폐쇄형 플랫폼에서는 사진 공유를 유지해야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(학생·학부모 사전 동의, 다운로드 방지·모자이크 원칙 등 안전장치 마련)].'
+      },
+      {
+        label:'문제 C형',
+        q:'초등학생들이 친구의 사진을 장난삼아 AI 앱으로 변형하거나 단체 대화방에서 따돌림을 하는 사례가 늘고 있다. 초등교사로서 학생들이 ‘장난과 범죄의 경계’를 명확히 이해하고 타인의 디지털 인권을 존중하도록 지도할 수 있는 구체적인 교육 방안을 제시하시오.',
+        tip:'[초상권·디지털 발자국 개념 눈높이 교육] → [실제 사례 기반 딜레마 토론·역할극] → [학급 디지털 에티켓 헌장 제정 및 가정 연계 약속].'
+      }
+    ]
+  },
+  {
+    id:'s12', tier:'A', t:2, cat:'학생·수업', title:'2022 개정 교육과정 ‘학교자율시간’과 프로젝트 수업',
+    basis:'2025~2026년 초등 3~6학년 2022 개정 교육과정 본격 적용 — ‘학교자율시간’ 신설 및 교사 교육과정 설계 역량 핵심 평가',
+    items:[
+      {
+        label:'문제 A형',
+        q:'2022 개정 교육과정에서 초등학교 3~6학년에 지역과 학교의 특성에 맞게 새로운 과목이나 활동을 개설할 수 있는 ‘학교자율시간’이 도입되었다. 이에 대해 학생 맞춤형 특색 교육을 위해 학교자율시간을 적극 확대해야 한다는 주장과, 교사의 교재 개발 부담이 크고 학교 간 교육의 질 격차가 벌어질 수 있으므로 국가 공통 교과에 집중해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(확대 시 교사 업무 가중·지역 격차 / 축소 시 획일화·지역 연계성 약화)] → [해결 방안(교육청 예시 자료 보급·교사 학습공동체 협업)].'
+      },
+      {
+        label:'문제 B형',
+        q:'학교자율시간의 주제를 정할 때 김 교사는 “학생들의 흥미와 선택권을 존중해 학생들이 직접 투표로 원하는 주제를 정해야 한다”고 주장하지만, 최 교사는 “초등학생은 시야가 좁을 수 있으므로 교사가 지역사회 문제와 교육적 가치를 종합적으로 고려해 주제를 선정해야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [학생 주도성 vs 교육적 체계성 근거] → [본인의 동아리·탐구·자율활동 경험과 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'교과 간 경계를 허물어 실생활 문제를 해결하는 ‘교과 융합 프로젝트 수업’이 강조되고 있다. 초등학교에서 프로젝트 수업을 운영할 때 기대할 수 있는 긍정적인 효과와 발생할 수 있는 문제점(무임승차, 기초개념 누락 등)을 말하고, 문제점을 보완하기 위한 방안을 제시하시오.',
+        tip:'[긍정적 효과(문제해결력·협업·배움의 실생활 전이)] → [문제점(역할 편중·시간 부족·핵심 개념 약화)] → [보완 방안(개별 역할 명시·단계별 점검표·교사의 핵심 개념 정리)].'
+      }
+    ]
+  },
+  {
+    id:'s13', tier:'A', t:1, cat:'정책·교권', title:'초등 학폭 저연령화와 관계회복 숙려제',
+    basis:'2026년 초등 저학년 ‘관계회복 숙려제’ 전국 시행 1년 차(해결률 86.7%, 부산 등 일부 지역 신청률 저조 개선 논의) 및 학교 사법화 우려',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초등 저학년까지 학교폭력 신고가 증가하고 사소한 다툼마저 법적 절차로 이어지는 ‘학교의 사법화’가 우려되자, 경미한 사안에 대해 심의 전 교육적 화해와 갈등 조정을 우선 진행하는 ‘관계회복 숙려제’가 시행되고 있다. 이에 대해 초등 단계의 교육적 해결을 위해 관계회복 숙려제를 적극 확대해야 한다는 주장과, 피해 학생 보호와 엄정한 책임 추궁을 위해 원칙적인 법적·행정적 절차를 우선해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(숙려제 확대 시 피해 학생 심리적 압박·은폐 오해 / 엄정 처리 시 관계 단절·갈등 격화)] → [해결 방안(피해 학생 자발적 동의 전제·전문 갈등조정가 지원)].'
+      },
+      {
+        label:'문제 B형',
+        q:'학급 내 다툼이 발생했을 때 김 교사는 “가해 학생과 피해 학생이 마주 앉아 서로의 감정을 듣고 진심으로 사과하는 회복적 대화를 우선해야 한다”고 주장하지만, 박 교사는 “피해 학생이 2차 상처를 받을 수 있으므로 먼저 두 학생을 철저히 분리하고 객관적 사실 조사와 규칙에 따른 조치를 취해야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(초기 안전 확보 및 분리 우선 → 피해 학생 의사에 따른 단계적 회복 대화 진행)].'
+      },
+      {
+        label:'문제 C형',
+        q:'초등학생들은 언어적 표현력이나 갈등 해결 기술이 미숙해 사소한 오해가 신체적·언어적 폭력으로 번지는 경우가 많다. 초등교사로서 학교폭력을 사후 처리하는 데 그치지 않고, 평소 학급에서 평화롭게 갈등을 해결하는 문화를 조성할 수 있는 예방 활동 방안을 제시하시오.',
+        tip:'[평화적 갈등 해결 3단계 훈련(멈추기-감정 말하기-대안 찾기)] → [학급 평화 서클·롤플레잉] → [방관자에서 방어자로 서는 또래 지지 문화 조성].'
+      }
+    ]
+  },
+  {
+    id:'s14', tier:'A', t:2, cat:'학생·수업', title:'기초학력 보장·문해력 저하와 진단평가',
+    basis:'초등학생 문해력·수리력 저하 지속 쟁점 및 맞춤형 학업성취도 자율평가·기초학력 진단평가 확대 논쟁',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초등학생의 문해력과 기초학력 저하가 심각한 문제로 대두되면서, 국가 수준의 기초학력 진단평가를 전수 실시하고 결과를 투명하게 관리해야 한다는 주장과, 일제식 평가는 서열화와 사교육 과열을 유발하므로 교사의 상시 관찰과 자율적 진단으로 대체해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(전수 실시 시 서열화·시험 부담 / 자율 진단 시 객관성 부족·학습 부진 조기 발견 누락)] → [해결 방안(결과 비공개 원칙·진단 후 즉각적 보충 지도 연계)].'
+      },
+      {
+        label:'문제 B형',
+        q:'기초학력이 부족한 학생을 지도하는 방법을 두고 김 교사는 “방과후 보충수업이나 별도의 기초학력 전담반에서 집중 지도를 받아야 빠르게 따라잡을 수 있다”고 주장하지만, 최 교사는 “별도 반 편성은 학생의 자존감을 떨어뜨리므로 정규 수업 시간에 협력강사(1수업 2교사제)와 함께 교실 안에서 지원하는 것이 바람직하다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [자존감 보호 vs 집중 보충 효과 근거] → [본인의 학습 어려움 극복 또는 또래·멘토링 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'단어의 뜻이나 문장의 맥락을 정확히 이해하지 못해 국어뿐만 아니라 수학 문장제나 사회·과학 교과서 읽기에도 어려움을 겪는 초등학생이 늘고 있다. 초등교사로서 전 교과 수업 속에서 학생들의 실질적인 문해력을 끌어올릴 수 있는 지도 방안을 제시하시오.',
+        tip:'[전 교과 어휘 노트·문맥으로 낱말 뜻 추론하기] → [소리 내어 함께 읽기 및 핵심 문장 요약 훈련] → [수학·과학 문장제를 자기 말로 바꿔 설명하기].'
+      }
+    ]
+  },
+  {
+    id:'s15', tier:'A', t:1, cat:'정책·교권', title:'유보통합과 유·초 이음교육 (초1 적응)',
+    basis:'2026년 유보통합(영유아 교육·보육 일원화) 본격 추진 및 2022 개정 교육과정 초1 ‘학교생활 적응·한글 책임교육’ 이음교육 강조',
+    items:[
+      {
+        label:'문제 A형',
+        q:'유치원과 어린이집을 통합하는 ‘유보통합’과 함께, 만 5세 유아와 초등학교 1학년의 교육과정을 자연스럽게 연결하는 ‘유·초 이음교육’이 확대되고 있다. 이에 대해 초등학교 입학 전 한글·기초 수 개념 등 학습 준비도를 높이는 방향으로 연계해야 한다는 주장과, 유아기의 놀이 중심 특성을 초등 1학년까지 확장해 정서적 적응을 돕는 방향으로 연계해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(학습 강조 시 조기 학습 스트레스·유아기 놀이권 침해 / 놀이 강조 시 학부모 불안·기초학습 격차 우려)] → [해결 방안(놀이 기반 한글 책임교육·학부모 인식 개선)].'
+      },
+      {
+        label:'문제 B형',
+        q:'초등학교 1학년 한글 교육을 두고 김 교사는 “이미 한글을 떼고 입학하는 아이들이 많으므로, 입학 초기부터 문장 쓰기와 독해 중심의 수준별 수업을 진행해야 한다”고 주장하지만, 박 교사는 “한글을 모르고 입학해도 학교에서 배울 수 있다는 신뢰를 주어야 하므로, 교육과정대로 기초 자음·모음부터 천천히 함께 배우는 원칙을 지켜야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(공교육 한글 책임교육 원칙 준수 + 이미 익힌 학생에게는 그림책 읽기·창작 등 확장 활동 제공)].'
+      },
+      {
+        label:'문제 C형',
+        q:'유치원·어린이집과 달리 정해진 수업 시간과 규칙이 있는 초등학교 1학년 교실에 입학하면서 분리불안이나 학교 부적응을 겪는 아이들이 적지 않다. 초등교사로서 신입생들이 낯선 학교 환경에 즐겁고 안정적으로 적응할 수 있도록 돕는 입학 초기 지도 방안을 제시하시오.',
+        tip:'[입학 전 학교 탐방·유치원 교사와의 정보 연계] → [놀이 중심 교실 규칙 익히기] → [6학년 선배와의 ‘의형제·멘토링’ 연결] → [학부모와의 따뜻한 초기 소통].'
+      }
+    ]
+  },
+  {
+    id:'s16', tier:'A', t:2, cat:'학생·수업', title:'통합학급 특수교육과 경계선 지능 학생 지원',
+    basis:'특수교육 대상자 및 ‘경계선 지능(느린 학습자)’ 학생 급증에 따른 통합학급 운영·UDL(보편적 학습설계) 교사 역량 핵심 주제',
+    items:[
+      {
+        label:'문제 A형',
+        q:'지적장애 기준에는 해당하지 않지만 일반 학급 수업을 따라가기 어려운 ‘경계선 지능(느린 학습자)’ 초등학생이 늘고 있다. 이에 대해 체계적인 지원을 위해 별도의 선별 검사와 전문 지원 대상으로 공식 지정해야 한다는 주장과, 공식 지정은 또래와 사회의 낙인을 부를 수 있으므로 일반 학급 내 보편적 맞춤형 지원으로 풀어야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        ref:'‘경계선 지능인’이란 일반적으로 지능지수(IQ) 71~84 사이에 해당하여 법적 장애 등록은 어렵지만 학습과 사회적응에 어려움을 겪는 사람을 일컫는다.',
+        tip:'[지지 입장 및 이유] → [문제점(공식 지정 시 낙인·학부모 거부감 / 보편 지원만 강조 시 전문적 치료·예산 지원 부족)] → [해결 방안(비밀 보장 조기 진단+학급 내 다층적 지원)].'
+      },
+      {
+        label:'문제 B형',
+        q:'특수교육 대상 학생이 함께 있는 통합학급에서 모둠 활동을 할 때 김 교사는 “특수교육 대상 학생도 스스로 해낼 수 있는 명확한 역할을 맡겨 동등한 구성원으로 참여하게 해야 한다”고 주장하지만, 최 교사는 “과제 수행에 부담을 느낄 수 있으므로 또래 도우미를 지정해 옆에서 세심하게 도와주도록 배려해야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [자립성·존중 vs 실질적 참여 지원 관점] → [본인의 모둠 활동·배려·협력 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'통합학급에서는 다양한 학습 속도와 특성을 지닌 학생들이 함께 수업을 듣는다. 장애 학생뿐만 아니라 모든 학생이 장벽 없이 배움에 참여할 수 있도록 하는 ‘보편적 학습설계(UDL)’를 초등학교 교실 수업에 적용할 수 있는 구체적인 방안을 제시하시오.',
+        ref:'‘보편적 학습설계(UDL: Universal Design for Learning)’란 모든 학습자의 다양성을 전제로 다양한 표현 방식, 참여 방식, 과제 수행 방식을 미리 설계하는 교수 원리이다.',
+        tip:'[자료 제시 다양화(글+그림+영상+실물 조작)] → [표현 방식 선택권(글쓰기·말하기·그림·만들기 중 선택)] → [단계별 과제와 협력적 교실 환경 조성].'
+      }
+    ]
+  },
+  {
+    id:'s17', tier:'A', t:2, cat:'학생·수업', title:'초등 과정중심평가와 공정성·학부모 소통',
+    basis:'지필고사 축소 및 과정중심 수행평가 전면화 속 평가 객관성·학부모 민원·피드백의 교육적 의미 핵심 쟁점',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초등학교에서는 일제식 지필고사 대신 수업 중 학생의 성장 과정을 살피는 ‘과정중심평가’가 정착되었다. 이에 대해 학생의 다양한 역량과 성장을 돕기 위해 서술형·관찰 중심의 과정중심평가를 더욱 강화해야 한다는 주장과, 학생의 객관적인 학업 수준을 파악하기 어렵고 학부모 불안만 키우므로 일정 수준의 객관적 지필 평가를 병행해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(과정평가만 시 객관적 수준 파악 한계 / 지필 병행 시 점수 경쟁·사교육 유발)] → [해결 방안(명확한 채점 기준 사전 공개·구체적 서술 피드백)].'
+      },
+      {
+        label:'문제 B형',
+        q:'학생의 수행평가 결과를 학부모에게 통지할 때 김 교사는 “아이의 자존감과 학습 동기를 높이기 위해 잘한 점과 긍정적인 변화 위주로 따뜻하게 기록해야 한다”고 주장하지만, 박 교사는 “아이의 실질적인 성장을 돕기 위해서는 부족한 점과 보완이 필요한 영역도 솔직하고 구체적으로 안내해야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [성장 마인드셋·정서적 지지 vs 정확한 진단과 피드백] → [본인이 선생님의 피드백을 통해 성장했던 경험 제시].'
+      },
+      {
+        label:'문제 C형',
+        q:'수행평가나 학급 행사에서 일부 학생과 학부모가 교사의 평가 기준이 주관적이고 불공정하다고 이의를 제기하는 경우가 늘고 있다. 초등교사로서 과정중심평가의 교육적 취지를 살리면서도 학생과 학부모 모두가 신뢰할 수 있는 공정한 평가 운영 방안을 제시하시오.',
+        tip:'[평가 전 성취기준과 채점 기준(루브릭) 학생·학부모 사전 안내] → [수업 시간 내 수행 원칙(가정 과제 배제)] → [자기평가·동료평가와 교사 관찰 기록의 다면적 활용].'
+      }
+    ]
+  },
+  {
+    id:'s18', tier:'A', t:2, cat:'학생·수업', title:'IB(국제바칼로레아) 초등 프로그램과 탐구 수업',
+    basis:'부산·대구·경기 등 전국 시·도교육청 IB(PYP) 관심·후보·인증학교 급속 확산 — 질문·탐구·개념기반 수업과 공교육 적용성 쟁점',
+    items:[
+      {
+        label:'문제 A형',
+        q:'부산 등 여러 시·도교육청에서 질문과 탐구 중심의 ‘IB(국제바칼로레아) 초등 프로그램(PYP)’ 도입을 적극 확대하고 있다. 이에 대해 암기식 수업을 넘어 자기주도적 사고력을 기르기 위해 IB 프로그램을 공교육에 널리 확산해야 한다는 주장과, 막대한 인증 비용과 교사 업무 부담이 크며 일부 학교에만 혜택이 집중되어 교육 불평등을 낳을 수 있으므로 신중해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        ref:'‘IB PYP(Primary Years Programme)’란 만 3~12세 학생을 대상으로 교과를 통합한 개념 기반 탐구학습과 서·논술형 평가를 강조하는 국제 교육 프로그램이다.',
+        tip:'[지지 입장 및 이유] → [문제점(확산 시 비용·교사 소진·학교 간 격차 / 신중론 시 수업 혁신 동력 약화)] → [해결 방안(IB의 핵심 탐구 원리를 한국형 교육과정에 일반화)].'
+      },
+      {
+        label:'문제 B형',
+        q:'탐구 수업을 진행할 때 김 교사는 “학생들이 스스로 질문을 만들고 시행착오를 겪으며 답을 찾아가도록 교사의 설명을 최소화해야 한다”고 주장하지만, 최 교사는 “초등학생은 배경지식이 부족하므로 교사가 핵심 개념을 먼저 명확히 구조화해 설명한 뒤 탐구 활동을 진행해야 효과적이다”라고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [발견·탐구 학습 vs 스캐폴딩(비계 설정) 기반 안내된 탐구] → [본인의 과학·사회 탐구 수업 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'“질문이 있는 교실”이 강조되고 있지만, 실제 초등학교 교실에서는 틀릴까 봐 두려워하거나 무엇을 물어야 할지 몰라 침묵하는 학생이 많다. 초등교사로서 학생들이 호기심을 가지고 자유롭게 질문하며 생각을 확장할 수 있는 수업 운영 방안을 제시하시오.',
+        tip:'[틀린 답도 환영하는 심리적 안전망 구축] → [질문 생성 기법(질문 만들기 보드·왜? 만약에? 카드)] → [교사의 기다림(Wait Time)과 학생 질문에서 출발하는 수업 설계].'
+      }
+    ]
+  },
+  {
+    id:'s19', tier:'A', t:3, cat:'사회·생태·미래', title:'기후위기·생태전환교육과 초등 탄소중립 실천',
+    basis:'부산교대 기출 단골 영역(2023 가/나형 C형, 2024 나형 C형) + 2022 개정 교육과정 범교과 핵심 ‘생태전환교육’·기후우울 대응',
+    items:[
+      {
+        label:'문제 A형',
+        q:'기후위기가 심각해지면서 학교 급식에서 주 1회 이상 채식 위주의 ‘저탄소·채식 선택 급식’을 의무 도입하자는 움직임이 확산되고 있다. 이에 대해 탄소 배출을 줄이고 학생들의 생태 감수성을 기르기 위해 적극 도입해야 한다는 주장과, 성장기 초등학생의 영양 균형과 기호권을 침해하고 오히려 잔반을 늘릴 수 있으므로 자율 선택에 맡겨야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(의무 도입 시 잔반 증가·영양 편식 / 자율 선택 시 실천율 저조)] → [해결 방안(맛있는 채식 메뉴 개발·사전 생태 교육 연계·선택 급식 운영)].'
+      },
+      {
+        label:'문제 B형',
+        q:'초등학생을 대상으로 기후위기 교육을 할 때 김 교사는 “문제의 심각성을 깨닫도록 폭염·해수면 상승 등 위기 현실을 정확하게 알려 경각심을 심어 주어야 한다”고 주장하지만, 박 교사는 “어린 학생에게 지나친 공포나 기후우울감을 줄 수 있으므로 자연의 아름다움을 느끼고 즐겁게 실천하는 긍정적 생태 체험을 중심에 두어야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(학년 발달 수준에 맞춰 저학년은 자연 친화·고학년은 객관적 이해와 실천 효능감 결합)].'
+      },
+      {
+        label:'문제 C형',
+        q:'최근 학교 안팎에서 친환경 소비를 강조하지만, 실제로는 일회성 행사나 보여주기식 캠페인에 그치는 경우가 많다. 초등학생들이 일상생활 속에서 지속 가능하게 탄소중립과 자원 순환을 실천하도록 이끌 수 있는 학급·학교 연계 활동 방안을 제시하시오.',
+        tip:'[학급 탄소발자국 줄이기(학용품 끝까지 쓰기·급식 잔반 제로·디지털 탄소 줄이기)] → [우리 동네 생태 지도 만들기] → [실천 결과를 데이터로 시각화해 효능감 부여].'
+      }
+    ]
+  },
+  {
+    id:'s20', tier:'A', t:2, cat:'학생·수업', title:'초등 독서·깊은 읽기 교육과 영상 매체',
+    basis:'2026년 독서율 하락·‘텍스트 힙’ 현상·한 학기 한 권 읽기 심화 및 초등학생의 종이책 vs 전자책/영상 매체 논쟁',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초등학생의 독서량이 줄고 영상 매체 이용이 늘어나면서 독서 교육의 방식을 두고 논쟁이 일고 있다. 이에 대해 문해력과 깊은 사고력을 기르기 위해 학교에서는 종이책 중심의 정독 교육을 원칙으로 해야 한다는 주장과, 변화하는 미디어 환경에 맞춰 전자책·오디오북·영상 콘텐츠를 아우르는 멀티모달(복합 양식) 읽기 교육을 적극 도입해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(종이책 고수 시 독서 기피 학생 흥미 유발 한계 / 멀티모달 확대 시 주의 분산·깊이 있는 독해 약화)] → [해결 방안(도입은 다양한 매체·핵심은 종이책 깊은 읽기)].'
+      },
+      {
+        label:'문제 B형',
+        q:'‘한 학기 한 권 읽기’ 수업을 운영할 때 김 교사는 “학생 각자가 자신이 좋아하는 책을 자유롭게 골라 읽도록 해야 평생 독서 습관이 길러진다”고 주장하지만, 최 교사는 “학급 전체가 같은 책을 함께 읽고 토론해야 깊이 있는 사고와 공감 능력을 기를 수 있다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [독서 흥미·자율성 vs 공동체 독서 토론의 깊이] → [본인이 책 읽기와 독서 토론을 통해 성장했던 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'독후감 쓰기나 독서 퀴즈 같은 과제 중심의 독서 활동이 오히려 초등학생들에게 책 읽기를 ‘지겨운 숙제’로 느끼게 만든다는 지적이 있다. 초등교사로서 학생들이 책 읽기의 즐거움을 스스로 발견하고 친구들과 생각을 나누게 하는 창의적인 독서 활동 방안을 제시하시오.',
+        tip:'[책 대화·북트레일러·등장인물 인터뷰·뒷이야기 이어쓰기] → [아침 10분 교사도 함께 읽는 ‘조용한 독서 시간’] → [평가 부담 없는 학급 책 추천 벽보 운영].'
+      }
+    ]
+  },
+  {
+    id:'s21', tier:'A', t:1, cat:'정책·교권', title:'현장체험학습 안전 책임과 체험 중심 교육',
+    basis:'2026학년도 나형 A형 기출의 후속 쟁점 — 학교안전법 시행 이후에도 이어지는 교사 인솔 기피·안전요원 배치·교내 찾아오는 체험 대체 논의',
+    items:[
+      {
+        label:'문제 A형',
+        q:'현장체험학습 중 안전사고에 대한 법적 부담과 인솔의 어려움 때문에 최근 학교 밖 체험학습 대신 전문 강사를 학교로 초청하는 ‘찾아오는 교내 체험학습’으로 대체하는 초등학교가 늘고 있다. 이에 대해 학생 안전과 교사의 부담 완화를 위해 교내 체험학습을 적극 확대해야 한다는 주장과, 지역사회와 자연을 직접 경험하는 학교 밖 체험학습의 교육적 가치를 포기해서는 안 된다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(교내 대체 시 현장감·사회성 경험 축소 / 학교 밖 유지 시 안전사고 우려·교사 심리적 부담)] → [해결 방안(안전보조인력 의무 배치·사전 답사 및 안전 매뉴얼 체계화)].'
+      },
+      {
+        label:'문제 B형',
+        q:'현장체험학습을 기획하면서 김 교사는 “학생들이 모둠별로 직접 동선을 짜고 미션을 해결하는 자율 탐방 형태로 운영해야 주도성이 길러진다”고 주장하지만, 박 교사는 “초등학생의 안전을 확보하고 교육 목표를 달성하기 위해 교사의 인솔 아래 정해진 동선과 해설을 따라가는 단체 활동으로 운영해야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(안전 구역 내 제한적 자율 탐구·학년별 단계적 적용)].'
+      },
+      {
+        label:'문제 C형',
+        q:'현장체험학습이 일회성 나들이로 끝나지 않고 교과 배움과 깊이 연결되려면 사전·현장·사후 활동의 체계적인 설계가 필요하다. 초등교사로서 안전을 최우선으로 지키면서도 교육적 효과를 극대화할 수 있는 현장체험학습 지도 방안을 제시하시오.',
+        tip:'[사전(안전 교육·교과 연계 탐구 질문 만들기)] → [현장(보조인력 협력·관찰 기록)] → [사후(체험 보고서·학급 전시회·성찰 나눔)].'
+      }
+    ]
+  },
+  {
+    id:'s22', tier:'A', t:1, cat:'정책·교권', title:'교대-종합대 통합 시대와 초등교사의 전문성',
+    basis:'2027년 3월 부산대-부산교대 통합(부산대 연제캠퍼스) 출범 원년 — 교원양성체제 변화 속 초등교사의 고유한 전문성과 자질 직결',
+    items:[
+      {
+        label:'문제 A형',
+        q:'학령인구 감소와 미래 사회 변화에 대응하기 위해 교육대학교와 종합대학의 통합 등 교원양성체제 개편이 추진되고 있다. 이에 대해 다양한 학문과 융합 역량을 기를 수 있도록 종합대학 중심의 개방적 양성 체제로 전환해야 한다는 주장과, 초등교육만의 고유한 전문성과 교직 사명감을 지키기 위해 목적형 교원양성 체제의 정체성을 강화해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(개방·통합 시 초등교육 특화성 약화 우려 / 목적형 고수 시 학문적 폐쇄성)] → [해결 방안(융합 역량 교육과정 확대+초등 현장 실습 및 교직 정체성 강화)].'
+      },
+      {
+        label:'문제 B형',
+        q:'예비 초등교사에게 가장 중요한 전문성을 두고 김 교사는 “전 교과를 가르치는 초등교사는 교과 내용 지식과 최신 에듀테크 활용 등 ‘수업 설계 전문성’을 최우선으로 갖추어야 한다”고 주장하지만, 최 교사는 “초등 시기는 인성과 생활습관이 형성되는 때이므로 아이의 마음을 읽고 소통하는 ‘생활지도 및 상담 전문성’이 더 중요하다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [초등교육의 본질에 비춘 이유] → [본인이 존경했던 선생님이나 학창 시절 경험과 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'최근 교권 추락과 교직에 대한 사회적 인식 변화로 초등교사 지망생 감소와 신규 교사의 조기 이탈이 우려되고 있다. 예비 초등교사로서 이러한 변화 속에서도 교직의 보람과 전문성을 지켜 나가기 위해 대학 시절과 임용 후 어떤 노력을 기울일 것인지 구체적인 방안을 제시하시오.',
+        tip:'[대학 시절(교육봉사·수업 연구 동아리·다양한 학생 이해 역량)] → [임용 후(동료 교사 학습공동체·지속적 자기 연수·건강한 심리적 회복탄력성 관리)].'
+      }
+    ]
+  },
+
+  /* ==================== B급 (필수 기본·심화 8세트) ==================== */
+  {
+    id:'s23', tier:'B', t:0, cat:'AI·디지털', title:'에듀테크 맞춤형 학습과 학생 데이터 프라이버시',
+    basis:'AI 학습 플랫폼 확대에 따른 학생 학습·행동 데이터 수집·알고리즘 편향·개인정보 보호 윤리 쟁점',
+    items:[
+      {
+        label:'문제 A형',
+        q:'에듀테크 학습 플랫폼이 초등학교에 확산되면서 학생의 풀이 과정, 오답 패턴, 집중 시간 등 방대한 학습 데이터가 실시간으로 수집·분석되고 있다. 이에 대해 정교한 개인 맞춤형 학습을 위해 데이터 수집과 활용을 적극 확대해야 한다는 주장과, 미성년 학생의 민감한 개인정보 유출과 데이터 낙인 위험이 크므로 수집을 최소화해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(확대 시 프라이버시 침해·알고리즘 고정관념 / 최소화 시 맞춤형 진단 효과 반감)] → [해결 방안(가명처리·공공 보안 기준·학부모 투명 동의)].'
+      },
+      {
+        label:'문제 B형',
+        q:'AI 학습 프로그램이 학생 개개인의 수준에 맞춰 자동으로 문제를 추천해 주는 기능을 두고 김 교사는 “학생이 자기 수준에 맞는 문제만 효율적으로 풀 수 있어 학습 성취도가 높아진다”고 긍정하지만, 박 교사는 “학생이 스스로 난이도를 선택하고 어려운 문제에 도전하며 실패해 보는 자기주도적 경험이 줄어든다”고 우려한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(AI 추천은 기초 진단 보조로 활용하고, 교사가 도전 과제와 선택권을 함께 제공)].'
+      },
+      {
+        label:'문제 C형',
+        q:'에듀테크와 AI가 학습 수준을 점수나 등급으로 실시간 분석해 보여 줄 때, 하위권 학생들은 학습 의욕을 잃거나 숫자에 매몰될 위험이 있다. 초등교사로서 AI 분석 데이터를 학생의 낙인이 아닌 ‘성장의 도구’로 활용하기 위한 지도 방안을 제시하시오.',
+        tip:'[타인과의 비교가 아닌 ‘어제의 나’와 비교하는 성장 피드백] → [AI가 포착하지 못하는 태도·노력·정서를 교사가 직접 관찰해 보완] → [학생과 함께 학습 목표를 세우는 메타인지 면담].'
+      }
+    ]
+  },
+  {
+    id:'s24', tier:'B', t:2, cat:'학생·수업', title:'초등 학급 내 갈등 해결과 민주적 학급자치',
+    basis:'초등학교 민주시민교육 핵심 — 다수결의 한계, 학급 규칙 제정, 소수 의견 존중과 책임 있는 자치 운영',
+    items:[
+      {
+        label:'문제 A형',
+        q:'학급 규칙을 정하고 운영하는 방식을 두고, 학생들의 민주시민 역량을 기르기 위해 규칙 제정부터 어겼을 때의 약속 이행까지 학생 자치에 최대한 맡겨야 한다는 주장과, 초등학생은 공정한 판단이 미숙해 또래 간 비난이나 다수의 횡포가 생길 수 있으므로 교사가 명확한 기준을 주도해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(자치 과다 시 또래 갈등·소수 소외 / 교사 주도 시 수동적 태도·규칙 내면화 부족)] → [해결 방안(교사가 안전·인권의 큰 틀 제시 + 세부 실천은 학생 합의)].'
+      },
+      {
+        label:'문제 B형',
+        q:'학급 회의에서 의견이 팽팽히 맞설 때 김 교사는 “신속하고 명확한 결정을 위해 민주주의 기본 원칙인 다수결 투표를 활용해야 한다”고 주장하지만, 최 교사는 “다수결은 소수 의견을 소외시킬 수 있으므로 시간이 걸리더라도 충분한 토론을 통해 모두가 동의하는 합의에 이르도록 이끌어야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [효율성·절차적 정당성 vs 숙의 민주주의·포용성] → [본인의 학급 회의·학생회·동아리 의사결정 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'학급 임원 선거나 학급 회의가 일부 인기 있거나 말을 잘하는 학생 중심으로만 흘러가고, 내성적인 학생들은 소외되는 경우가 많다. 초등교사로서 학급의 모든 학생이 주인의식을 가지고 평등하게 참여하는 ‘민주적 학급자치’ 운영 방안을 제시하시오.',
+        tip:'[1인 1역할 순환제] → [소모둠 사전 토의·익명 의견 포스트잇(패들렛) 활용] → [소수 의견 경청 규칙 및 경청 태도 격려].'
+      }
+    ]
+  },
+  {
+    id:'s25', tier:'B', t:3, cat:'사회·생태·미래', title:'지역 소멸과 농어촌 소규모 학교의 미래',
+    basis:'부산·경남·비수도권 지역 소멸 위기 속 소규모 학교 통폐합 논쟁, 지역 특색 교육과정 및 디지털 원격 공동수업',
+    items:[
+      {
+        label:'문제 A형',
+        q:'지방 소멸과 학령인구 급감으로 전교생이 30명 미만인 초등학교가 급증하고 있다. 이에 대해 학생들의 사회성 발달과 교육 재정 효율성을 위해 인근 거점 학교로 통폐합해야 한다는 주장과, 학교가 사라지면 지역 공동체 전체가 무너지므로 작은 학교를 유지·특성화해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장을 선택했을 때 해결해야 할 과제를 제시하시오.',
+        tip:'[지지 입장 및 이유] → [해결 과제(통폐합 시 통학 안전·지역 공동화 / 유지 시 또래 부족·교육과정 운영 한계)] → [구체적 해결 방안(통학버스 지원 또는 농촌유학·작은학교 살리기)].'
+      },
+      {
+        label:'문제 B형',
+        q:'지역사회와 연계한 초등 교육을 두고 김 교사는 “학생들이 자신이 사는 고장의 역사와 환경을 깊이 배우는 지역 중심 교육과정을 강화해야 애향심과 정체성이 길러진다”고 주장하지만, 박 교사는 “지역에 국한되기보다 세계 시민으로서의 보편적 시야와 글로벌 역량을 기르는 교육이 더 중요하다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [지역 정체성(글로컬) vs 세계 시민성 근거] → [본인의 지역 탐방·사회 수업·국제 교류 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'도심과 농어촌(또는 원도심과 신도심) 간 교육·문화 인프라 격차가 초등학생의 학습 경험 차이로 이어지고 있다. 초등교사로서 지역적 한계를 극복하고 모든 학생에게 질 높은 배움의 기회를 제공할 수 있는 방안을 제시하시오.',
+        tip:'[원격 화상 교류 수업·온라인 박물관 및 전문가 초청] → [인근 학교 간 공동교육과정] → [지역 고유의 자연·인적 자원을 오히려 강점으로 살리는 특색 프로젝트].'
+      }
+    ]
+  },
+  {
+    id:'s26', tier:'B', t:2, cat:'학생·수업', title:'초등 예체능 교육 강화와 전인적 성장',
+    basis:'초등학생 비만·체력 저하 및 2022 개정 초1~2 신체활동 분리(체육 강화) 논의, 예체능 기능 중심 vs 참여·표현 중심 논쟁',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초등학생의 비만율 증가와 기초체력 저하가 심각해지면서 초등학교 저학년부터 체육 전담 수업과 매일 1시간 이상 신체활동을 의무화하자는 주장이 나오고 있다. 이에 대해 아동의 신체·정서 건강을 위해 학교 체육 시수와 전담 교사를 대폭 확대해야 한다는 주장과, 기존 교과 시수 압박과 안전사고·시설 부족 문제가 크므로 방과후 스포츠클럽 활성화로 접근해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(의무 확대 시 실내 체육관 부족·교과 시수 조정 난항 / 방과후 중심 시 사교육 일정으로 참여율 저조)] → [해결 방안(아침 틈새 신체활동·지역 체육시설 연계)].'
+      },
+      {
+        label:'문제 B형',
+        q:'초등학교 체육·음악·미술 수업을 지도할 때 김 교사는 “운동 기능이나 악기 연주·표현 기법 등 기초 실기 능력을 체계적으로 가르쳐야 성취감을 느낄 수 있다”고 주장하지만, 최 교사는 “기능 숙달보다 모든 아이가 승패나 실력에 부담 없이 즐겁게 참여하고 자신을 표현하는 경험이 더 중요하다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [기초 기능 숙달의 성취감 vs 참여와 즐거움의 가치] → [본인의 체육·음악·미술 수업 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'체육 시간에 “못해서 창피하다”며 뒤로 물러서거나, 미술 시간에 “나는 그림을 못 그려요”라며 시작조차 망설이는 초등학생들이 많다. 초등교사로서 예체능에 자신감이 없는 학생들도 즐겁게 도전하고 성취감을 느끼도록 돕는 수업 지도 방안을 제시하시오.',
+        tip:'[결과 비교 금지·과정과 도전 칭찬] → [규칙을 변형한 협동형 뉴스포츠·다양한 매체 미술 활동] → [작은 성공 경험을 단계적으로 설계하는 개별화 목표 제시].'
+      }
+    ]
+  },
+  {
+    id:'s27', tier:'B', t:3, cat:'사회·생태·미래', title:'미디어 리터러시와 허위정보(가짜뉴스) 판별',
+    basis:'AI 생성 허위정보·알고리즘 확증편향 확산 속 초등 단계 비판적 미디어 리터러시 교육 필수화',
+    items:[
+      {
+        label:'문제 A형',
+        q:'유튜브와 SNS를 통해 AI가 만든 가짜뉴스와 자극적인 혐오 표현이 초등학생들에게 여과 없이 노출되고 있다. 이에 대해 학교에서 초등학생에게 최신 시사 뉴스와 온라인 이슈를 직접 다루며 팩트체크 교육을 적극 실시해야 한다는 주장과, 초등학생은 가치관이 형성되는 시기이므로 정치적·사회적 편향 논란을 피하기 위해 교과서 중심의 기초 읽기 교육에 집중해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(시사 다룰 시 교사 중립성 논란 / 교과서만 시 현실 허위정보 대응력 부족)] → [해결 방안(정치적 중립 가이드라인·아동 눈높이 생활 속 정보 검증 훈련)].'
+      },
+      {
+        label:'문제 B형',
+        q:'초등학생의 미디어 이용 지도를 두고 김 교사는 “유해 콘텐츠와 알고리즘 중독을 막기 위해 학부모와 함께 이용 시간과 시청 채널을 엄격하게 제한해야 한다”고 주장하지만, 박 교사는 “통제만으로는 몰래 보는 부작용이 생기므로, 아이와 함께 영상을 보며 비판적으로 이야기 나누는 ‘동반 시청과 대화’가 더 효과적이다”라고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(연령별 최소 안전 규칙 설정 + 비판적 읽기 대화 병행)].'
+      },
+      {
+        label:'문제 C형',
+        q:'초등학생들은 인터넷 검색 결과나 인기 유튜버의 말을 사실 여부 확인 없이 그대로 믿는 경향이 강하다. 초등교사로서 학생들이 ‘확증편향’에 빠지지 않고 정보의 사실과 의견을 구분하며 출처를 확인하는 습관을 기를 수 있는 수업 활동 방안을 제시하시오.',
+        ref:'‘확증편향(confirmation bias)’이란 자신의 기존 신념이나 생각과 일치하는 정보만 받아들이고, 반대되는 정보는 무시하는 인지적 편향을 말한다.',
+        tip:'[사실 vs 의견 구별하기 활동] → [출처·작성일·근거 확인 3단계 ‘정보 탐정’ 놀이] → [같은 주제의 상반된 기사·영상 비교 토론].'
+      }
+    ]
+  },
+  {
+    id:'s28', tier:'B', t:2, cat:'학생·수업', title:'초등 자기주도학습과 가정 연계 숙제 논란',
+    basis:'초등학교 ‘숙제 없는 학교’ 찬반, 가정 배경에 따른 학습 격차 및 초등학생의 자기주도적 학습 습관 형성',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초등학생의 방과후 휴식권을 보장하고 부모의 도움 여부에 따른 과제 격차를 줄이기 위해 ‘숙제 없는 초등학교’를 운영하자는 주장과, 적정 수준의 숙제는 복습 효과와 자기주도적 학습 습관·책임감을 기르는 데 필수적이므로 유지해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(숙제 폐지 시 복습 습관 약화·사교육 의존 증가 / 숙제 유지 시 가정 배경 격차·학부모 대리 수행)] → [해결 방안(학생 혼자 15~20분 내 해결 가능한 맞춤형·생활 실천형 과제)].'
+      },
+      {
+        label:'문제 B형',
+        q:'학급의 과제 수행을 독려하기 위해 김 교사는 “과제를 성실히 해 온 학생에게 스티커나 쿠폰 같은 명확한 보상을 주어야 초등학생의 학습 동기가 높아진다”고 주장하지만, 최 교사는 “외적 보상에 익숙해지면 보상이 없을 때 공부하지 않게 되므로, 칭찬과 흥미로운 수업으로 내적 동기를 길러야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [외적 동기(강화)의 초기 습관 형성 vs 내적 동기의 지속성] → [본인의 학창 시절 학습 동기 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'학원 스케줄과 시키는 공부에 익숙해진 초등학생들은 스스로 공부 계획을 세우고 점검하는 ‘자기주도학습’ 능력이 부족한 경우가 많다. 초등교사로서 학생들이 학업의 주인이 되어 스스로 배우고 성찰하는 습관을 기르도록 돕는 학급 지도 방안을 제시하시오.',
+        tip:'[배움 공책(오늘 배운 핵심 1줄·궁금한 점 기록)] → [작은 주간 학습 목표 스스로 세우고 점검하기] → [실패 원인을 스스로 분석하고 다음 전략을 찾는 메타인지 대화].'
+      }
+    ]
+  },
+  {
+    id:'s29', tier:'B', t:3, cat:'사회·생태·미래', title:'초고령 사회 세대 공감과 지역사회 연계 교육',
+    basis:'대한민국 초고령 사회 진입(65세 이상 20% 돌파) — 세대 갈등 해소, 노인·아동 상호돌봄 및 지역사회 연계 인성교육',
+    items:[
+      {
+        label:'문제 A형',
+        q:'초고령 사회로 진입하면서 세대 간 단절과 갈등이 깊어지고 있다. 이에 대해 초등학교 교육과정에 지역 어르신과 함께하는 세대 통합 프로그램(전통 놀이, 책 읽어주기, 디지털 가르쳐 드리기 등)을 적극 도입해야 한다는 주장과, 안전 관리와 학생들의 흥미 부족, 교사의 행정 부담을 고려해 학교 본연의 교과 활동에 집중해야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장의 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(도입 시 일회성 봉사 전락·안전 및 행정 부담 / 미도입 시 세대 공감 교육 기회 상실)] → [해결 방안(지자체·복지관 협력 지원 및 교과 연계 내실화)].'
+      },
+      {
+        label:'문제 B형',
+        q:'초등학생의 인성교육 방식을 두고 김 교사는 “효도·예절·배려 같은 핵심 덕목을 도덕 수업과 훈화를 통해 명확하게 가르치고 실천하게 해야 한다”고 주장하지만, 박 교사는 “가르치려 들기보다 봉사·협동·세대 교류 같은 실제 체험을 통해 아이들이 스스로 타인의 입장을 느끼도록 해야 한다”고 주장한다. 두 교사의 주장에 대한 장점과 단점을 각각 말하고, 자신의 의견을 제시하시오.',
+        tip:'[김 교사 장·단점] → [박 교사 장·단점] → [자신의 의견(핵심 가치의 인지적 이해와 살아 있는 체험·성찰의 결합)].'
+      },
+      {
+        label:'문제 C형',
+        q:'핵가족화와 디지털 소통의 일상화로 초등학생들이 다양한 연령대의 어른들과 소통할 기회가 크게 줄어들었다. 초등교사로서 학생들이 어르신을 비롯한 지역사회 이웃에 대한 편견을 없애고 따뜻한 세대 공감 능력을 기를 수 있는 활동 방안을 제시하시오.',
+        tip:'[어르신의 삶 인터뷰 및 동화책 만들기] → [초등학생이 어르신께 키오스크·스마트폰 알려드리는 ‘역멘토링’] → [지역 전통 놀이·요리 함께 체험하기].'
+      }
+    ]
+  },
+  {
+    id:'s30', tier:'B', t:0, cat:'AI·디지털', title:'초등 생성형 AI 이용 제한과 창작·저작권 윤리',
+    basis:'2026년 11월 해외(뉴욕시·노르웨이 등) 초등학생 범용 생성형 AI 직접 이용 제한 논의 및 ‘정답 대신 내주는 AI’ 사고력 저하·저작권 윤리',
+    items:[
+      {
+        label:'문제 A형',
+        q:'최근 해외 일부 교육청에서 어린 학생의 사고력 저하와 의존성 우려를 이유로 초등학생의 범용 생성형 AI 직접 이용을 제한하거나 유예하면서 국내에서도 논의가 활발하다. 이에 대해 기초 사고력을 다지는 초등 시기에는 학생의 생성형 AI 직접 사용을 원칙적으로 제한해야 한다는 주장과, AI 시대에 대비해 교사의 지도 아래 초등 단계부터 올바른 활용법과 비판적 검증 역량을 길러 주어야 한다는 주장이 맞서고 있다. 자신이 지지하는 주장과 이유를 말하고, 이 주장이 지닌 문제점과 해결 방안을 제시하시오.',
+        tip:'[지지 입장 및 이유] → [문제점(제한 시 가정별 디지털 활용 격차·무단 사용 관리 한계 / 허용 시 정답 의존·사고력 저하)] → [해결 방안(발달 단계별 허용 기준·정답 대신 힌트를 주는 교육용 AI 활용)].'
+      },
+      {
+        label:'문제 B형',
+        q:'초등 미술·국어 창작 수업에서 AI 이미지·글 생성 도구를 활용하는 문제를 두고 김 교사는 “표현 기술이 서툰 학생도 AI의 도움을 받아 상상력을 마음껏 시각화할 수 있으므로 적극 활용해야 한다”고 주장하지만, 최 교사는 “손으로 직접 그리고 고민하며 표현하는 과정 자체가 초등 창작 교육의 핵심이므로 AI 생성 도구를 배제해야 한다”고 주장한다. 두 견해 중 한 가지를 선택하고, 본인의 학교 경험에 근거하여 구체적으로 설명하시오.',
+        tip:'[견해 선택] → [상상력 확장·접근성 vs 직접 창작 과정의 교육적 가치] → [본인의 창작·표현 활동 경험 구체적 연결].'
+      },
+      {
+        label:'문제 C형',
+        q:'생성형 AI가 만든 글이나 그림을 자신이 만든 것처럼 제출하거나, 출처 없이 인터넷 자료를 복사해 사용하는 초등학생들이 늘고 있다. 초등교사로서 학생들이 저작권과 창작 윤리의 가치를 자연스럽게 익히고 정직하게 AI를 활용하도록 지도할 수 있는 방안을 제시하시오.',
+        tip:'[내 작품이 소중하듯 타인의 창작물도 소중함을 느끼는 공감 활동] → [AI 도움 받은 부분 정직하게 밝히는 ‘출처 표기 약속’] → [AI 결과물을 그대로 쓰지 않고 내 생각으로 재창작하는 수업 설계].'
+      }
+    ]
+  }
+];
+
+/* =========================================================================
+   앱 상태 관리, 2분 타이머, 음성 녹음/STT, Gemini AI 평가 로직
+   ========================================================================= */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ls = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } };
+
+let hist = ls('bnue_hist_v3', {});
+let custom = ls('bnue_custom_v3', []);
+
+// 🔑 Gemini API 설정 (참조 앱과 동일한 키/모델 유지)
+const key = 'AQ.Ab8RN6LitkjPb443PkuOREwB18OTCyk5R7laAKcqq1lZs7se_w';
+const MODEL = 'gemini-3-flash-preview';
+
+const DURATION = 120; // 2분 (120초)
+const ORDER_GUIDE = [
+  '1번 낭독·답변 → 2번 → 3번',
+  '2번 낭독·답변 → 3번 → 1번',
+  '3번 낭독·답변 → 1번 → 2번'
+];
+
+let bank = [];
+let cur = 0;           // 현재 선택된 세트 인덱스
+let filterCat = -1;    // 카테고리 필터 (-1: 전체, 0~3)
+let filterTier = 'ALL';// 등급 필터 ('ALL', 'S', 'A', 'B')
+let S = null;          // 현재 세트 진행 상태 { step: 1~4, a: ['','',''], ev: [null,null,null,null] }
+
+// 녹음 및 음성인식 상태
+let rec = null, chunks = [], blob = null, recording = false;
+let recog = null, base = '';
+
+// 2분 카운트다운 타이머 상태
+let remSec = DURATION;
+let timerId = null;
+let timerRunning = false;
+let soundOn = true;
+let audioCtx = null;
+
+const newS = () => ({ step: 1, a: ['', '', ''], ev: [null, null, null, null] });
+const fmt = s => {
+  const safe = Math.max(0, s);
+  return String(Math.floor(safe / 60)).padStart(2, '0') + ':' + String(safe % 60).padStart(2, '0');
+};
+
+function build() {
+  bank = SETS.concat(custom);
+}
+
+function save() {
+  try {
+    localStorage.setItem('bnue_hist_v3', JSON.stringify(hist));
+    localStorage.setItem('bnue_custom_v3', JSON.stringify(custom));
+  } catch (e) {
+    // 저장 공간 초과 시 무시
+  }
+}
+
+let toastTimer = null;
+function toast(m) {
+  const t = $('toast');
+  t.textContent = m;
+  t.style.opacity = '1';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.style.opacity = '0'; }, 3200);
+}
+
+/* ==================== 부드러운 종료 알림음 (Web Audio API) ==================== */
+function playBeep(type) {
+  if (!soundOn) return;
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    if (!audioCtx) audioCtx = new AudioContextClass();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const now = audioCtx.currentTime;
+    const notes = type === 'end' ? [880, 660, 880] : [740];
+    notes.forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.18);
+      gain.gain.setValueAtTime(0.001, now + idx * 0.18);
+      gain.gain.exponentialRampToValueAtTime(0.18, now + idx * 0.18 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.18 + 0.16);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + idx * 0.18);
+      osc.stop(now + idx * 0.18 + 0.17);
+    });
+  } catch (e) {
+    // 오디오 재생 불가 환경 무시
+  }
+}
+
+/* ==================== 2분 카운트다운 타이머 제어 ==================== */
+function renderTimer() {
+  const elapsed = DURATION - remSec;
+  $('countdown').textContent = fmt(remSec);
+  $('elapsedInfo').textContent = `경과 ${fmt(elapsed)} / 제한 02:00`;
+  const pct = Math.max(0, Math.min(100, (remSec / DURATION) * 100));
+  $('timerBar').style.width = pct + '%';
+
+  const panel = $('timerPanel');
+  const cd = $('countdown');
+  const bar = $('timerBar');
+  const st = $('timerStatus');
+
+  panel.classList.remove('pulse-urgent', 'border-sky-200', 'bg-sky-50/60', 'border-amber-300', 'bg-amber-50/70', 'border-rose-400', 'bg-rose-50/80');
+  cd.classList.remove('text-blue-900', 'text-amber-700', 'text-rose-600');
+  bar.classList.remove('bg-blue-600', 'bg-amber-500', 'bg-rose-500');
+
+  if (remSec === 0) {
+    panel.classList.add('border-rose-400', 'bg-rose-50/80');
+    cd.classList.add('text-rose-600');
+    bar.classList.add('bg-rose-500');
+    st.textContent = '시간 종료';
+  } else if (remSec <= 10) {
+    panel.classList.add('border-rose-400', 'bg-rose-50/80');
+    if (timerRunning) panel.classList.add('pulse-urgent');
+    cd.classList.add('text-rose-600');
+    bar.classList.add('bg-rose-500');
+    st.textContent = timerRunning ? '마무리 10초!' : '일시정지';
+  } else if (remSec <= 30) {
+    panel.classList.add('border-amber-300', 'bg-amber-50/70');
+    cd.classList.add('text-amber-700');
+    bar.classList.add('bg-amber-500');
+    st.textContent = timerRunning ? '30초 남음' : '일시정지';
+  } else {
+    panel.classList.add('border-sky-200', 'bg-sky-50/60');
+    cd.classList.add('text-blue-900');
+    bar.classList.add('bg-blue-600');
+    st.textContent = timerRunning ? '진행 중' : (remSec === DURATION ? '대기 중' : '일시정지');
+  }
+
+  $('timerToggleBtn').textContent = timerRunning ? '⏸ 일시정지' : (remSec === 0 ? '▶ 다시 시작' : '▶ 타이머 시작');
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  if (remSec <= 0) remSec = DURATION;
+  timerRunning = true;
+  renderTimer();
+  timerId = setInterval(() => {
+    if (remSec > 0) {
+      remSec--;
+      if (remSec === 30) playBeep('warn');
+      if (remSec === 0) {
+        pauseTimer();
+        playBeep('end');
+        toast('⏱️ 2분 답변 시간이 종료되었습니다! 마무리해 보세요.');
+      }
+      renderTimer();
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  timerRunning = false;
+  clearInterval(timerId);
+  timerId = null;
+  renderTimer();
+}
+
+function resetTimer() {
+  pauseTimer();
+  remSec = DURATION;
+  renderTimer();
+}
+
+/* ==================== 화면 렌더링 ==================== */
+function tierBadgeStyle(tier) {
+  if (tier === 'S') return { text: '🔥 S급 최우선', cls: 'bg-rose-100 text-rose-800 border border-rose-200' };
+  if (tier === 'A') return { text: '⭐ A급 핵심', cls: 'bg-amber-100 text-amber-800 border border-amber-200' };
+  if (tier === 'B') return { text: '📘 B급 기본', cls: 'bg-sky-100 text-sky-800 border border-sky-200' };
+  return { text: '✏️ 내 세트', cls: 'bg-indigo-100 text-indigo-800 border border-indigo-200' };
+}
+
+function setProgressCount(setId) {
+  const h = hist[setId];
+  if (!h || !h.ev) return 0;
+  return [0, 1, 2].filter(k => Boolean(h.ev[k])).length;
+}
+
+function isSetDone(setId) {
+  const h = hist[setId];
+  return Boolean(h && h.ev && (h.ev[3] || (h.ev[0] && h.ev[1] && h.ev[2])));
+}
+
+function renderList() {
+  // 등급 필터 버튼 스타일
+  document.querySelectorAll('.tf').forEach(b => {
+    const active = b.dataset.tier === filterTier;
+    b.className = 'tf py-1.5 rounded-xl transition-all ' + (
+      active ? 'bg-blue-700 text-white font-bold shadow-xs' : 'bg-sky-50 text-slate-600 hover:bg-sky-100'
+    );
+  });
+
+  // 카테고리 필터 버튼 스타일
+  document.querySelectorAll('.f').forEach(b => {
+    const active = +b.dataset.f === filterCat;
+    b.className = 'f py-2 rounded-xl transition-all ' + (
+      active ? 'bg-sky-600 text-white font-bold shadow-xs' : 'bg-sky-50/70 text-slate-600 hover:bg-sky-100'
+    );
+  });
+
+  const filtered = bank
+    .map((b, i) => ({ b, i }))
+    .filter(({ b }) => (filterTier === 'ALL' || b.tier === filterTier) && (filterCat < 0 || b.t === filterCat));
+
+  if (filtered.length === 0) {
+    $('list').innerHTML = '<div class="text-center text-xs text-slate-400 py-8">해당 조건에 맞는 세트가 없습니다.</div>';
+  } else {
+    $('list').innerHTML = filtered.map(({ b, i }) => {
+      const cnt = setProgressCount(b.id);
+      const done = isSetDone(b.id);
+      const tb = tierBadgeStyle(b.tier);
+      const badge = done
+        ? '<span class="text-emerald-700 font-bold">✔ 완료</span>'
+        : (cnt > 0 ? `<span class="text-blue-600 font-bold">${cnt}/3 진행</span>` : '');
+      return `
+        <button data-i="${i}" class="q w-full text-left p-3 rounded-xl border text-xs transition-all ${
+          i === cur
+            ? 'border-blue-500 bg-blue-50/90 shadow-xs'
+            : done
+              ? 'border-emerald-200 bg-emerald-50/35 hover:bg-emerald-50/60'
+              : 'border-sky-100 bg-white hover:bg-sky-50/50'
+        }">
+          <div class="flex items-center justify-between gap-1 mb-1">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="px-1.5 py-0.5 rounded-md text-[10px] font-bold shrink-0 ${tb.cls}">${b.tier === 'C' ? 'MY' : b.tier + '급'}</span>
+              <span class="font-bold text-blue-900 truncate">SET ${String(i + 1).padStart(2, '0')} · ${esc(b.cat)}</span>
+            </div>
+            <span class="shrink-0 text-[11px]">${badge}</span>
+          </div>
+          <div class="font-semibold text-slate-800 line-clamp-1">${esc(b.title)}</div>
+          <div class="text-[11px] text-slate-500 line-clamp-1 mt-0.5">${esc(b.items[0].q)}</div>
+        </button>
+      `;
+    }).join('');
+  }
+
+  const doneCnt = bank.filter(b => isSetDone(b.id)).length;
+  $('done').textContent = doneCnt;
+  $('total').textContent = bank.length;
+  $('bar').style.width = (bank.length ? (doneCnt / bank.length) * 100 : 0) + '%';
+}
+
+function view() {
+  const b = bank[cur];
+  const s = S.step; // 1=A, 2=B, 3=C, 4=종합
+  const tb = tierBadgeStyle(b.tier);
+
+  $('tierBadge').textContent = tb.text;
+  $('tierBadge').className = 'rounded-xl px-2.5 py-1.5 shadow-xs ' + tb.cls;
+  $('setTag').textContent = `SET ${String(cur + 1).padStart(2, '0')} · ${b.cat}`;
+  $('setNum').textContent = `${cur + 1} / ${bank.length} 세트`;
+  $('issueBasis').innerHTML = `<span class="shrink-0">🎯</span><span><b>2026 출제 근거:</b> ${esc(b.basis || '사용자 정의 실전 세트')}</span>`;
+
+  if (s < 4) {
+    const item = b.items[s - 1];
+    $('probBadge').textContent = item.label;
+    $('orderBadge').textContent = '실전 순서: ' + ORDER_GUIDE[s - 1];
+    $('orderBadge').classList.remove('hidden');
+    $('qtext').textContent = item.q;
+
+    if (item.ref) {
+      $('qrefBox').classList.remove('hidden');
+      $('qref').textContent = item.ref;
+    } else {
+      $('qrefBox').classList.add('hidden');
+    }
+
+    $('tipWrap').classList.remove('hidden');
+    $('tip').textContent = item.tip;
+    $('rtitle').innerHTML = `<span>🎙️</span> ${esc(item.label)} 답변 연습 (2분 제한)`;
+    $('abtn').textContent = s < 3
+      ? `${item.label} AI 평가받고 다음 문항 준비하기 🚀`
+      : '문제 C형 AI 평가받기 ✨';
+    $('answerBox').querySelectorAll('textarea,#rec,#stt,#timerToggleBtn,#timerResetBtn').forEach(el => { el.disabled = false; });
+    $('tr').value = S.a[s - 1] || '';
+    updateCharCount();
+  } else {
+    $('probBadge').textContent = '🏆 3문항 세트 종합';
+    $('orderBadge').classList.add('hidden');
+    $('qrefBox').classList.add('hidden');
+    $('tipWrap').classList.add('hidden');
+    const answeredCount = [0, 1, 2].filter(k => (S.a[k] || '').trim().length > 0).length;
+    $('qtext').textContent = `[SET ${String(cur + 1).padStart(2, '0')}. ${b.title}]\n문제 A·B·C형 답변(${answeredCount}/3 완료)을 모두 종합해 부산교대 면접위원 관점의 최종 리포트를 받아보세요.`;
+    $('rtitle').innerHTML = '<span>🏆</span> 세트 종합 리포트 생성';
+    $('abtn').textContent = S.ev[3] ? '🏆 세트 종합 리포트 다시 생성하기' : '🏆 3문항 세트 종합 평가받기';
+    $('answerBox').querySelectorAll('textarea,#rec,#stt,#timerToggleBtn,#timerResetBtn').forEach(el => { el.disabled = true; });
+    $('tr').value = '';
+    updateCharCount();
+  }
+
+  // 상단 단계 이동 바 (클릭하여 A·B·C·종합 자유 전환 가능)
+  const stepNames = ['문제 A형', '문제 B형', '문제 C형', '세트 종합'];
+  $('steps').innerHTML = stepNames.map((name, idx) => {
+    const n = idx + 1;
+    const isCur = n === s;
+    const done = Boolean(S.ev[idx]);
+    return `<button data-step="${n}" class="stbtn px-3 py-1.5 rounded-xl whitespace-nowrap text-xs transition-all ${
+      isCur
+        ? 'bg-blue-600 text-white font-bold shadow-xs'
+        : done
+          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100'
+          : 'bg-sky-50 text-slate-600 border border-sky-100 hover:bg-sky-100'
+    }">${n}. ${name}${done ? ' ✔' : ''}</button>`;
+  }).join('<span class="text-slate-300">›</span>');
+}
+
+function updateCharCount() {
+  const len = $('tr').value.trim().length;
+  $('charCount').textContent = `${len}자`;
+}
+
+function resetInput() {
+  stopRec();
+  resetTimer();
+  blob = null;
+  $('au').removeAttribute('src');
+  $('play').disabled = true;
+  $('play').textContent = '▶';
+  base = '';
+}
+
+function select(i) {
+  cur = i;
+  const h = hist[bank[i].id];
+  S = h ? JSON.parse(JSON.stringify(h)) : newS();
+  if (!S.step || S.step < 1 || S.step > 4) S.step = 1;
+  resetInput();
+  renderList();
+  view();
+  const latestTab = S.ev[3] ? 4 : S.ev[2] ? 3 : S.ev[1] ? 2 : S.ev[0] ? 1 : 0;
+  if (latestTab) fb(latestTab);
+  else $('fb').classList.add('hidden');
+}
+
+function goStep(n) {
+  // 현재 입력 중이던 텍스트 보존
+  if (S.step >= 1 && S.step <= 3) {
+    S.a[S.step - 1] = $('tr').value;
+  }
+  S.step = n;
+  resetInput();
+  view();
+  if (S.ev[n - 1]) fb(n);
+}
+
+function fb(t) {
+  const e = S.ev[t - 1];
+  if (!e) return;
+  const b = bank[cur];
+  $('fb').classList.remove('hidden');
+
+  const tabLabels = ['문제 A형', '문제 B형', '문제 C형', '🏆 세트 종합'];
+  $('tabs').innerHTML = [1, 2, 3, 4].map(n => `
+    <button data-t="${n}" ${S.ev[n - 1] ? '' : 'disabled'} class="tb flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
+      n === t
+        ? 'bg-blue-600 text-white shadow-xs'
+        : S.ev[n - 1]
+          ? 'bg-white border border-sky-200 text-blue-900 hover:bg-sky-50'
+          : 'bg-sky-50/50 text-slate-300 cursor-not-allowed'
+    }">${tabLabels[n - 1]}</button>
+  `).join('');
+
+  if (t < 4) {
+    $('fbctx').innerHTML = `
+      <div class="font-bold text-blue-900">[${esc(b.items[t - 1].label)}] ${esc(b.items[t - 1].q)}</div>
+      <div class="italic whitespace-pre-line text-slate-600 mt-1.5 border-t border-slate-200 pt-1.5">💬 내 답변: ${esc(S.a[t - 1])}</div>
+    `;
+  } else {
+    $('fbctx').innerHTML = `<div class="font-bold text-blue-900">🏆 SET ${String(cur + 1).padStart(2, '0')} (${esc(b.title)}) — 문제 A·B·C형 종합 평가 리포트</div>`;
+  }
+
+  $('s1').textContent = e.scoreLogic ?? '-';
+  $('s2').textContent = e.scoreTeach ?? '-';
+  $('st').textContent = e.strengths || '';
+  $('im').textContent = e.improvements || '';
+  $('ma').textContent = e.modelAnswer || '';
+
+  // 질문지 요구조건별 답변 충족 점검표 렌더링
+  const chkWrap = $('chkWrap');
+  const chkList = $('chkList');
+  if (Array.isArray(e.checklist) && e.checklist.length > 0) {
+    chkWrap.classList.remove('hidden');
+    $('chkTitle').innerHTML = t < 4
+      ? '<span>📋</span> 질문지 요구조건별 답변 점검 (빠진 내용 확인)'
+      : '<span>📋</span> 세트 3문항(A·B·C) 전체 답변 완결성 점검';
+    chkList.innerHTML = e.checklist.map(c => {
+      const status = String(c.status || '').trim();
+      let badgeCls = 'bg-rose-100 text-rose-800 border-rose-200';
+      let badgeIcon = '✕';
+      if (status.includes('충족')) {
+        badgeCls = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+        badgeIcon = '✔';
+      } else if (status.includes('일부') || status.includes('보완') || status.includes('미흡')) {
+        badgeCls = 'bg-amber-100 text-amber-800 border-amber-200';
+        badgeIcon = '△';
+      }
+      return `
+        <div class="bg-white/90 border border-indigo-100 rounded-xl p-2.5 flex items-start gap-2.5">
+          <span class="shrink-0 mt-0.5 px-2 py-0.5 rounded-lg border text-[11px] font-bold ${badgeCls}">${badgeIcon} ${esc(status || '점검')}</span>
+          <div class="min-w-0 flex-1 text-xs leading-relaxed">
+            <div class="font-bold text-slate-800">${esc(c.item || '')}</div>
+            <div class="text-slate-600 mt-0.5">${esc(c.comment || '')}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } else {
+    chkWrap.classList.add('hidden');
+  }
+
+  $('maTitle').innerHTML = t < 4
+    ? '<span>⭐</span> 고3 수험생 눈높이 2분 모범 답안 (실제 말하기 예시)'
+    : '<span>⭐</span> 교대 교수님의 고3 수험생 실전 마무리 조언';
+
+  // 다음 단계 빠른 이동 버튼 (꼬리질문 없이 A → B → C → 종합)
+/* 부산교대 전용 AI 평가 시스템 프롬프트 (교대 교수님 시선 · 고3 눈높이 · 꼬리질문 금지) */
+function buildSysPrompt(isSummary) {
+  return `너는 부산교육대학교(부산대학교 연제캠퍼스) 초등교육과 수시 학생부종합전형 제시문 기반 면접을 담당하는 따뜻하면서도 객관적인 '교육대학교 교수'이다.
+지금 평가하는 지원자는 교육 전문가나 현직 교사가 아니라, 초등교사를 꿈꾸며 수시 면접을 준비하는 '고등학교 3학년 학생'이다.
+
+[핵심 평가 원칙]
+1. 질문지의 모든 세부 문항·요구조건 완전 점검 (최우선):
+   - ${isSummary
+     ? '문제 A형, 문제 B형, 문제 C형 각각에 대해 학생이 질문지가 요구한 세부 조건들을 빠뜨리지 않고 제대로 답했는지 문항별로 빠짐없이 점검한다.'
+     : '제시문(질문지)이 요구하는 세부 조건을 하나도 빠뜨리지 않고 분해한다(예: ① 지지 주장과 이유, ② 선택한 주장의 문제점, ③ 해결 방안 / ① 두 교사 각각의 장점과 단점, ② 자신의 의견 / ① 한 견해 선택, ② 본인의 학교 경험 근거 / ① 긍정적 효과, ② 문제점, ③ 보완 방안 등). 각 요구조건마다 학생이 제대로 답했는지(충족 / 일부 부족 / 누락)를 checklist 배열에 정확히 기록한다.'}
+   - 요구조건을 하나라도 빼먹거나 대충 넘겼다면 정확히 짚어주고, 어떻게 덧붙이면 좋을지 친절하게 알려준다.
+2. 고등학교 3학년 눈높이에 맞춘 현실적 평가:
+   - 학생에게 전문 교육학 이론, 복잡한 법령 조항, 행정 용어를 요구하거나 그런 용어가 없다고 감점하지 않는다.
+   - 고3 학생 수준에서 문제를 정확히 이해했는지, 자신의 생각을 차분하고 논리적으로 정리했는지, 본인의 학교생활 경험과 아이들을 향한 진심·따뜻한 시선이 드러나는지(예비 초등교사로서의 성장 가능성)를 중심으로 평가한다.
+   - 블라인드 규정 위반(지원자 성명, 출신 고등학교명 언급)이나 2분 적정 분량(약 400~550자) 과부족이 있으면 보완점에 꼭 안내한다.
+3. 고등학교 3학년 수준의 모범 답안 제시 (매우 중요):
+   - 모범 답안은 교육학 논문이나 교육부 보도자료, 현직 교사 연수 자료처럼 딱딱하게 쓰지 않는다.
+   - '스캐폴딩', '거버넌스', '다층적 지원 체계', '메타인지적 비계' 같은 고3 학생이 평소 말하기 어려운 과도한 전문 용어는 피한다(단, 문제의 <참고>에 제시된 용어는 자연스럽게 활용 가능).
+   - 실제 고3 수험생이 면접장에서 2분(약 450~550자) 동안 자연스럽게 말할 수 있는 쉬운 어휘와 솔직한 구어체("~라고 생각합니다", "고등학교 시절 ~했던 경험이 있습니다", "앞으로 예비 초등교사로서 ~해보고 싶습니다")로 작성하되, 질문지가 요구한 모든 조건은 빠짐없이 깔끔하게 담아낸다.
+4. 꼬리질문은 절대 생성하지 않는다.
+
+반드시 지정된 JSON 스키마 형식으로만 응답하라.`;
+}
+}
+
+/* ==================== 모바일 호환 오디오 녹음 & 실시간 STT ==================== */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SR) {
+  recog = new SR();
+  recog.lang = 'ko-KR';
+  recog.continuous = true;
+  recog.interimResults = true;
+  recog.onresult = ev => {
+    let t = '';
+    for (const r of ev.results) t += r[0].transcript;
+    $('tr').value = (base + ' ' + t).trim();
+    updateCharCount();
+  };
+  recog.onend = () => {
+    base = $('tr').value.trim();
+    if (recording) {
+      try { recog.start(); } catch (e) {}
+    }
+  };
+}
+
+async function startRec() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    toast('이 브라우저는 마이크 녹음을 지원하지 않습니다. 직접 타이핑해 연습해 주세요.');
+    return;
+  }
+  try {
+    const st = await navigator.mediaDevices.getUserMedia({ audio: true });
+    let options = {};
+    if (typeof MediaRecorder !== 'undefined') {
+      if (MediaRecorder.isTypeSupported('audio/webm')) options = { mimeType: 'audio/webm' };
+      else if (MediaRecorder.isTypeSupported('audio/mp4')) options = { mimeType: 'audio/mp4' };
+    }
+    rec = new MediaRecorder(st, options);
+    chunks = [];
+    rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    rec.onstop = () => {
+      blob = new Blob(chunks, { type: rec.mimeType || 'audio/webm' });
+      $('au').src = URL.createObjectURL(blob);
+      $('play').disabled = false;
+    };
+    rec.start();
+    base = $('tr').value.trim();
+    try { if (recog) recog.start(); } catch (e) {}
+    recording = true;
+    $('rec').classList.add('pulse-rec', 'bg-rose-600');
+    $('rec').classList.remove('bg-sky-500');
+    $('rec').textContent = '■';
+    // 녹음 시작 시 2분 카운트다운 타이머 자동 시작
+    if (!timerRunning) startTimer();
+  } catch (e) {
+    toast('마이크 권한을 허용해 주세요 (HTTPS 환경 필요) 🎤');
+  }
+}
+
+function stopRec() {
+  if (!recording) return;
+  recording = false;
+  try {
+    if (rec && rec.state !== 'inactive') rec.stop();
+    if (rec && rec.stream) rec.stream.getTracks().forEach(t => t.stop());
+  } catch (e) {}
+  try { if (recog) recog.stop(); } catch (e) {}
+  $('rec').classList.remove('pulse-rec', 'bg-rose-600');
+  $('rec').classList.add('bg-sky-500');
+  $('rec').textContent = '🎤';
+  pauseTimer();
+}
+
+/* ==================== Gemini API 통신 ==================== */
+async function gemRaw(body) {
+  $('load').classList.remove('hidden');
+  try {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) {
+      const errJson = await r.json().catch(() => ({}));
+      throw new Error(errJson.error?.message || 'HTTP ' + r.status);
+    }
+    const d = await r.json();
+    return d.candidates?.[0]?.content?.parts?.[0]?.text || null;
+  } catch (e) {
+    toast('AI 요청 실패: ' + e.message);
+    return null;
+  } finally {
+    $('load').classList.add('hidden');
+  }
+}
+
+/* 부산교대 전용 AI 평가 시스템 프롬프트 (꼬리질문 생성 금지) */
+function buildSysPrompt(isSummary) {
+  return `너는 부산교육대학교(부산대학교 연제캠퍼스) 초등교육과 수시 학생부종합전형 제시문 기반 면접위원(교수)이다.
+지원자는 고3 수험생이며, 실제 면접(3인 1조 多대多 블라인드 면접, 3문항 A·B·C 순차 답변, 꼬리질문 없음, 문항당 약 2분 답변)을 연습 중이다.
+
+평가 기준:
+1. 문항의 모든 요구 조건(지지 주장+이유+문제점+해결방안 / 두 교사 장단점 각각+본인 의견 / 본인 학교 경험 근거 등)을 빠짐없이 논리적으로 충족했는지 점검한다.
+2. 예비 초등교사로서의 교육관, 학생 발달 이해, 현실적이고 따뜻한 교실 적용 방안을 평가한다.
+3. 블라인드 규정 위반(지원자 성명, 출신 고등학교명 등 언급)이나 2분 분량(400~550자 기준) 과부족이 있으면 보완점에 꼭 지적한다.
+4. 꼬리질문은 절대 생성하지 않는다.
+
+반드시 아래 JSON 형식으로만 응답하라(마크다운 코드블록 없이 순수 JSON 문자열만 출력):
+{
+  "scoreLogic": 0~100 정수 (논리성, 구조화 및 문항 요구조건 충족도),
+  "scoreTeach": 0~100 정수 (예비 초등교사 교직관 및 초등교육 현장 적합성),
+  "strengths": "잘한 점 2~3줄",
+  "improvements": "보완하면 좋은 점 2~3줄 (누락된 요구조건·시간 분량·블라인드 규정 점검 포함)",
+  "modelAnswer": "${isSummary
+    ? '문제 A·B·C형 전체를 아우르는 핵심 보완 전략과 실제 부산교대 면접장(3인 1조 多대多)에서 차별화할 수 있는 실전 팁 4~5줄'
+    : '고3 지원자가 실제 부산교대 면접장에서 2분(약 450~550자) 동안 말할 수 있는 자연스러운 구어체(~라고 생각합니다, ~하겠습니다) 모범 답안'}"
+}`;
+}
+
+/* ==================== 이벤트 바인딩 ==================== */
+$('rec').onclick = () => (recording ? stopRec() : startRec());
+$('play').onclick = () => {
+  const a = $('au');
+  if (!a.src) return;
+  if (a.paused) { a.play(); $('play').textContent = '❚❚'; }
+  else { a.pause(); $('play').textContent = '▶'; }
+};
+$('au').onended = () => { $('play').textContent = '▶'; };
+
+$('timerToggleBtn').onclick = () => (timerRunning ? pauseTimer() : startTimer());
+$('timerResetBtn').onclick = resetTimer;
+$('soundToggle').onclick = () => {
+  soundOn = !soundOn;
+  $('soundToggle').textContent = soundOn ? '🔔 종료 알림음 켜짐' : '🔕 종료 알림음 꺼짐';
+  if (soundOn) playBeep('warn');
+};
+
+$('tr').oninput = updateCharCount;
+
+$('stt').onclick = async () => {
+  if (!blob) return toast('먼저 마이크 버튼을 눌러 음성을 녹음해 주세요 🎙️');
+  const b64 = await new Promise(resolve => {
+    const f = new FileReader();
+    f.onload = () => resolve(String(f.result).split(',')[1]);
+    f.readAsDataURL(blob);
+  });
+  const t = await gemRaw({
+    contents: [{
+      parts: [
+        { inlineData: { mimeType: (blob.type || 'audio/webm').split(';')[0], data: b64 } },
+        { text: '이 한국어 음성을 들리는 그대로 받아쓰기한 텍스트만 출력하세요. 다른 설명은 쓰지 마세요.' }
+      ]
+    }]
+  });
+  if (t) {
+    $('tr').value = t.trim();
+    updateCharCount();
+    toast('음성 받아쓰기가 완료되었습니다 ✨');
+  }
+};
+
+$('abtn').onclick = async () => {
+  stopRec();
+  const s = S.step;
+  const b = bank[cur];
+  const A = [...S.a];
+
+  if (s < 4) {
+    const ans = $('tr').value.trim();
+    if (!ans) return toast('답변을 녹음하거나 텍스트로 입력해 주세요 💬');
+    A[s - 1] = ans;
+  } else {
+    const hasAny = A.some(x => (x || '').trim().length > 0);
+    if (!hasAny) return toast('먼저 문제 A·B·C형 중 하나 이상 답변을 완료해 주세요 📝');
+  }
+
+  let userPrompt = '';
+  if (s < 4) {
+    const item = b.items[s - 1];
+    const elapsed = DURATION - remSec;
+    userPrompt = `[세트 주제] ${b.title}\n[${item.label}] ${item.q}` +
+      (item.ref ? `\n<참고> ${item.ref}` : '') +
+      `\n\n[고3 지원자 답변] (${A[s - 1].length}자, 타이머 경과 ${fmt(elapsed)} / 02:00)\n${A[s - 1]}\n\n위 질문지에 포함된 모든 세부 요구조건에 지원자가 빠짐없이 제대로 답했는지 checklist로 하나씩 점검하고, 교대 교수님의 시선에서 고3 학생 눈높이에 맞춰 평가와 모범 답안을 작성해 주세요.`;
+  } else {
+    userPrompt = `[세트 주제] ${b.title}\n\n` + [0, 1, 2].map(k =>
+      `[${b.items[k].label}] ${b.items[k].q}\n[고3 지원자 답변] ${(A[k] || '').trim() || '(미응답)'}`
+    ).join('\n\n') + '\n\n위 문제 A·B·C형 3문항 전체에 대해 각 문항의 모든 세부 요구조건을 제대로 답했는지 checklist로 문항별 점검하고, 교대 교수님의 시선에서 고3 학생 눈높이에 맞춘 종합 평가와 실전 조언을 작성해 주세요.';
+  }
+
+  const raw = await gemRaw({
+    systemInstruction: { parts: [{ text: buildSysPrompt(s === 4) }] },
+    contents: [{ parts: [{ text: userPrompt }] }],
+    generationConfig: {
+      responseMimeType: 'application/json',
+      responseSchema: {
+        type: 'OBJECT',
+        properties: {
+          scoreLogic: { type: 'INTEGER' },
+          scoreTeach: { type: 'INTEGER' },
+          checklist: {
+            type: 'ARRAY',
+            items: {
+              type: 'OBJECT',
+              properties: {
+                item: { type: 'STRING' },
+                status: { type: 'STRING', enum: ['충족', '일부 부족', '누락'] },
+                comment: { type: 'STRING' }
+              },
+              required: ['item', 'status', 'comment']
+            }
+          },
+          strengths: { type: 'STRING' },
+          improvements: { type: 'STRING' },
+          modelAnswer: { type: 'STRING' }
+        },
+        required: ['scoreLogic', 'scoreTeach', 'checklist', 'strengths', 'improvements', 'modelAnswer']
+      }
+    }
+  });
+
+  if (!raw) return;
+
+  let j;
+  try {
+    let cleanText = raw.trim();
+    if (cleanText.startsWith('```json')) cleanText = cleanText.replace(/^```json/, '').replace(/```$/, '').trim();
+    else if (cleanText.startsWith('```')) cleanText = cleanText.replace(/^```/, '').replace(/```$/, '').trim();
+    j = JSON.parse(cleanText);
+  } catch (e) {
+    toast('AI 응답 형식을 처리하는 중 오류가 발생했습니다. 다시 시도해 주세요 😅');
+    return;
+  }
+
+  S.a = A;
+  S.ev[s - 1] = j;
+  hist[b.id] = JSON.parse(JSON.stringify(S));
+  save();
+  renderList();
+  view();
+  fb(s);
+  $('fb').scrollIntoView({ behavior: 'smooth' });
+};
+
+// 좌측 목록 및 필터 클릭
+$('list').onclick = e => {
+  const btn = e.target.closest('.q');
+  if (btn) select(+btn.dataset.i);
+};
+$('tierFilters').onclick = e => {
+  const btn = e.target.closest('.tf');
+  if (btn) { filterTier = btn.dataset.tier; renderList(); }
+};
+$('filters').onclick = e => {
+  const btn = e.target.closest('.f');
+  if (btn) { filterCat = +btn.dataset.f; renderList(); }
+};
+
+// 상단 단계 버튼 & 피드백 탭 클릭
+$('steps').onclick = e => {
+  const btn = e.target.closest('.stbtn');
+  if (btn) goStep(+btn.dataset.step);
+};
+$('tabs').onclick = e => {
+  const btn = e.target.closest('.tb');
+  if (btn && !btn.disabled) fb(+btn.dataset.t);
+};
+
+// 이전/다음/랜덤/초기화
+$('prevSet').onclick = () => { if (cur > 0) select(cur - 1); else toast('첫 번째 세트입니다.'); };
+$('nextSet').onclick = () => { if (cur < bank.length - 1) select(cur + 1); else toast('마지막 세트입니다.'); };
+$('rand').onclick = () => {
+  const pool = bank
+    .map((b, i) => i)
+    .filter(i => (filterTier === 'ALL' || bank[i].tier === filterTier) && (filterCat < 0 || bank[i].t === filterCat) && !isSetDone(bank[i].id));
+  const fallback = bank
+    .map((b, i) => i)
+    .filter(i => (filterTier === 'ALL' || bank[i].tier === filterTier) && (filterCat < 0 || bank[i].t === filterCat));
+  const target = pool.length ? pool : (fallback.length ? fallback : bank.map((_, i) => i));
+  select(target[Math.floor(Math.random() * target.length)]);
+  toast('랜덤 세트를 선택했습니다 🔀');
+};
+$('reset').onclick = () => {
+  delete hist[bank[cur].id];
+  save();
+  select(cur);
+  toast('현재 세트를 처음(문제 A형)부터 초기화했습니다 🔄');
+};
+
+// 나만의 3문항 세트 추가
+$('addSetBtn').onclick = () => {
+  const title = $('newTitle').value.trim();
+  const qa = $('newQA').value.trim();
+  const qb = $('newQB').value.trim();
+  const qc = $('newQC').value.trim();
+  if (!title || !qa || !qb || !qc) {
+    toast('세트 주제와 문제 A·B·C형 내용을 모두 입력해 주세요 ✏️');
+    return;
+  }
+  const defaultTip = '입장(결론) → 구체적 근거·경험 → 문제점/보완 방안 순서로 2분 안에 구성해 보세요.';
+  custom.push({
+    id: 'c' + Date.now(),
+    tier: 'C',
+    t: 1,
+    cat: '내 세트',
+    title,
+    basis: '직접 추가한 부산교대 실전 연습 3문항 세트',
+    items: [
+      { label: '문제 A형', q: qa, tip: defaultTip },
+      { label: '문제 B형', q: qb, tip: defaultTip },
+      { label: '문제 C형', q: qc, tip: defaultTip }
+    ]
+  });
+  save();
+  build();
+  $('newTitle').value = '';
+  $('newQA').value = '';
+  $('newQB').value = '';
+  $('newQC').value = '';
+  filterTier = 'ALL';
+  filterCat = -1;
+  select(bank.length - 1);
+  toast('나만의 3문항 세트가 추가되었습니다 ✨');
+};
+
+// 실전 면접 안내 모달 열기/닫기
+const toggleGuide = show => $('guideModal').classList.toggle('hidden', !show);
+$('guideBtn').onclick = () => toggleGuide(true);
+$('closeGuide').onclick = () => toggleGuide(false);
+$('closeGuideBtn').onclick = () => toggleGuide(false);
+$('guideModal').onclick = e => { if (e.target === $('guideModal')) toggleGuide(false); };
+
+// 앱 초기화
+window.addEventListener('DOMContentLoaded', () => {
+  build();
+  renderTimer();
+  select(0);
+});
+</script>
+</body>
+</html>
